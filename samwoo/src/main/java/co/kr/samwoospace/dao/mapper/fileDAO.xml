@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kr.samwoospace.dao.fileDAO">
+
+<!-- SELECT QUERY -->
+
+<select id="selectFileInfo" resultType="encodedFile">
+select fileName, storeDate, replace(encodedFileName, '/', '') as encodedFileName, bbsId, boardNum, thumbUrl, encodedURL, num 
+from fileStore where boardNum=#{boardNum} and bbsId=#{bbsId}
+</select>
+
+<select id="selectFileInfoByFileNum" resultType="encodedFile">
+select fileName, storeDate, encodedFileName, bbsId, boardNum, thumbUrl, encodedURL, num 
+from fileStore where num=#{num}
+</select>
+
+<select id="selectFileInfoByType" resultType="encodedFile" parameterType="encodedFile">
+select fileName, storeDate, encodedFileName, bbsId, boardNum, thumbUrl, encodedURL, num 
+from fileStore where boardNum=#{boardNum} and fileName=#{fileName}  
+</select>
+
+<!-- SELECT QUERY END -->
+
+
+
+<!-- INSERT QUERY -->
+
+<insert id="insertFileName" parameterType="encodedFile">
+	insert into fileStore(fileName, storeDate, encodedFileName, bbsId, boardNum, thumbUrl,
+                      encodedURL)
+	values(#{fileName}, getDate(), #{encodedFileName}, #{bbsId}, #{boardNum}, #{thumbUrl} , '');
+</insert>
+
+<!-- INSERT QUERY END -->
+
+
+
+
+<!-- DELETE QUERY -->
+
+<delete id="deleteFileByFileNum" parameterType="int">
+	delete from fileStore where num=#{num};
+</delete>
+<delete id="deleteFileByBoardNum" parameterType="hashMap">
+	delete from fileStore where bbsId=#{bbsId} boardNum=#{num};
+</delete>
+
+<!-- DELETE QUERY END -->
+
+</mapper>

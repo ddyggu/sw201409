@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+							  http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<mvc:view-controller path="/index" view-name="index"/>
+	<mvc:view-controller path="/test" view-name="test"/>
+	<mvc:view-controller path="/about01" view-name="about01"/>
+	<mvc:view-controller path="/about02" view-name="about02"/>
+	<mvc:view-controller path="/about03" view-name="about03"/>
+	<mvc:view-controller path="/about04" view-name="about04"/>
+	<mvc:view-controller path="/about05" view-name="about05"/>
+	<mvc:view-controller path="/about06" view-name="about06"/>
+	<mvc:view-controller path="/about07" view-name="about07"/>
+	<mvc:view-controller path="/about08" view-name="about08"/>
+	<mvc:view-controller path="/career01" view-name="career01"/>
+	<mvc:view-controller path="/career02" view-name="career02"/>
+	<mvc:view-controller path="/career03" view-name="career03"/>
+	<mvc:view-controller path="/community01_view" view-name="community01_view"/>
+	<mvc:view-controller path="/community01" view-name="community01"/>
+	<mvc:view-controller path="/community02" view-name="community02"/>
+	<mvc:view-controller path="/community03" view-name="community03"/>
+	<mvc:view-controller path="/community04" view-name="community04"/>
+	<mvc:view-controller path="/community05" view-name="community05"/>
+	<mvc:view-controller path="/community05_sub" view-name="community05_sub"/>
+	<mvc:view-controller path="/project" view-name="project"/>
+	<mvc:view-controller path="/service01" view-name="service01"/>
+	<mvc:view-controller path="/service02" view-name="service02"/>
+	<mvc:view-controller path="/service03" view-name="service03"/>
+	<mvc:view-controller path="/service04" view-name="service04"/>
+	
+	<mvc:view-controller path="/admin/popup" view-name="admin/popup"/>
+	<mvc:view-controller path="/admin/popup_write" view-name="admin/popup_write"/>
+	<mvc:view-controller path="/admin/club_view" view-name="admin/club_view"/>
+	<mvc:view-controller path="/admin/club_write" view-name="admin/club_write"/>
+	<mvc:view-controller path="/admin/club" view-name="admin/club"/>
+	<mvc:view-controller path="/admin/consult_view" view-name="admin/consult_view"/>
+	<mvc:view-controller path="/admin/consult" view-name="admin/consult"/>
+	<mvc:view-controller path="/admin/faq_view" view-name="admin/faq_view"/>
+	<mvc:view-controller path="/admin/faq_write" view-name="admin/faq_write"/>
+	<mvc:view-controller path="/admin/faq" view-name="admin/faq"/>
+	<mvc:view-controller path="/admin/index" view-name="admin/index"/>
+	<mvc:view-controller path="/admin/notice" view-name="admin/notice"/>
+	<mvc:view-controller path="/admin/notice_view" view-name="admin/notice_view"/>
+	<mvc:view-controller path="/admin/notice_write" view-name="admin/notice_write"/>
+	<mvc:view-controller path="/admin/recruit" view-name="admin/recruit"/>
+	<mvc:view-controller path="/admin/recruit_view" view-name="admin/recruit_view"/>
+	<mvc:view-controller path="/admin/recruit_write" view-name="admin/recruit_write"/>
+	<mvc:view-controller path="/admin/result" view-name="admin/result"/>
+	<mvc:view-controller path="/admin/result_view" view-name="admin/result_view"/>
+	<mvc:view-controller path="/admin/result_write" view-name="admin/result_write"/>
+	<mvc:view-controller path="/admin/technology" view-name="admin/technology"/>
+	<mvc:view-controller path="/admin/technology_view" view-name="admin/technology_view"/>
+	<mvc:view-controller path="/admin/technology_write" view-name="admin/technology_write"/>
+	
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- Admin Resources -->
+	<resources mapping="/admin/img/**" location="/WEB-INF/views/admin/img/"  />
+	<resources mapping="/admin/css/**" location="/WEB-INF/views/admin/css/"  />
+	<resources mapping="/admin/js/**" location="/WEB-INF/views/admin/js/"  />
+	<!-- General Resources -->
+	<resources mapping="/img/**" location="/WEB-INF/views/img/"  />
+	<resources mapping="/css/**"    location="/WEB-INF/views/css/" />
+	<resources mapping="/js/**"    location="/WEB-INF/views/js/" />
+	<!-- Mobile Resources -->
+	<resources mapping="/img_m/**" location="/WEB-INF/views/mobile/img_m/"  />
+	<resources mapping="/css_m/**"  location="/WEB-INF/views/mobile/css_m/"  />
+	
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="co.kr.samwoospace."/>
+	
+	<beans:bean id="stringUtility"  class="co.kr.samwoospace.util.StringUtilityImpl"/>
+		
+	<beans:bean id="customerService" class="co.kr.samwoospace.bean.CustomerService" scope="prototype"/>
+	
+</beans:beans>

@@ -1,0 +1,122 @@
+@charset "utf-8";
+
+/* Common */
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+ /*@font-face{font-family:NG;src:url(NanumGothic.eot);src:local(※),url(NanumGothic.woff) format('woff')}*/
+body{font-family:나눔고딕,NanumGothic,'Nanum Gothic',돋움,Dotum,Arial,Helvetica,sans-serif;line-height:150%; color:#444444; font-size:14px;}
+body{color: #444444;font-size:14px; line-height:150%; word-wrap:break-word; word-break:break-all;}
+
+*{margin: 0;padding:0;border:0;}
+ul,ol, li{list-style:none}
+a{color:inherit; text-decoration:none}
+a:hover, a:focus, a:active{color:#fff;text-decoration:none;}
+table {border-collapse: collapse;border-spacing: 0;}
+img,fieldset{border:0; vertical-align:middle;}
+em,address,i ,u ,b{font-style:normal}
+input,textarea {font-size: 100%; font-weight:inherit; vertical-align:middle; font-family:나눔고딕,NanumGothic,'Nanum Gothic',돋움,Dotum,Arial,Helvetica,sans-serif;}
+input.text {}
+select {-webkit-border-radius:10%; font-size:100%; font-weight:inherit; vertical-align:middle; font-family:나눔고딕,NanumGothic,'Nanum Gothic',돋움,Dotum,Arial,Helvetica,sans-serif; background:#F7F7F7; width:100px; padding:5px;}
+button {cursor:pointer;margin:0px;padding:0px;}
+address,caption,cite,code,dfn,em,var {font-style: normal;font-weight: 400;}
+
+
+.ml10 {margin-left:10px;}
+.ml20 {margin-left:20px;}
+.mt10 {margin-top:10px;}
+.mt20 {margin-top:20px;}
+.mt30 {margin-top:30px;}
+.mt40 {margin-top:40px;}
+.mt15 {margin-top:15px;}
+.m1020 {margin:10px 20px;}
+.m20 {margin:20px 0;}
+.f18 {font-size:16px; }
+.f14 {font-size:14px;}
+
+.mx1 {margin-right:1.5%;}
+.mx2 {margin-right:2%;}
+.my1 {margin-top:1.5%;}
+
+.w50 {width:50%;}
+.w100 {width:100%;}
+.w49 {width:49%;}
+.w20 {width:20%;}
+.w32 {width:32%;}
+.w213 {width:21.3%;}
+.w543 {width:54.3%;}
+.w32 {width:32%;}
+.w32 {width:32%;}
+
+
+.m10 {margin:10px 0;}
+.m1050 {margin:10px 0 10px 50px;}
+.m3010 {margin:30px 0 10px 0px;}
+.vm {vertical-align:middle;}
+.vt {vertical-align:top;}
+.fc01 {color:#fff;}
+
+.select {display:inline-block; height:25px; line-height:21px; padding: 0 0 0 5px; width:100px; border:1px solid #d1d4d7; border-radius:0px; background:url(../img/btn_select.jpg) no-repeat right center #FFF; background-size:25px 25px; font-size:15px; font-weight:bold; color:#323527; vertical-align:middle; -webkit-appearance:none; font-size: 12px;}
+
+#wrap {width:720px; margin:0px auto;}
+.mainwrap {width:100%; background:url(../img/main_bg.jpg) center top;}
+.main_navi {width:98%; margin:0px auto; padding:10px 0; text-align:center;}
+.main_navi .mid {position:relative; vertical-align:top;}
+.main_navi .mid_bot {position:absolute; left:0px; bottom:0px; width:49%;}
+
+.topwrap {width:100%; text-align:center; background:#383A4C;}
+	.topwrap img{width:45%;}
+.naviwrap {width:100%; clear:both;}
+.naviwrap img {width:25%;}
+
+.submenu {width:100%; }
+.submenu ul {clear:both; width:100%;}
+.submenu ul li {float:left; width:25%; text-align:center; color:#FFCCBC; background:url(../img/mtip.png) no-repeat 0% 50% #F05626; font-size:100%; font-weight:bold; border-bottom:1px solid #D2451A;}
+.submenu ul li a{display: block; width: auto; padding:15px 0px;}
+
+.submenu01 {width:100%; }
+.submenu01 ul {clear:both; width:100%;}
+.submenu01 ul li {float:left; width:25%; text-align:center; color:#FFCCBC; background:url(../img/mtip.png) no-repeat 0% 50% #FAA61A; font-size:100%; font-weight:bold; border-bottom:1px solid #D2451A;}
+.submenu01 ul li a{display: block; width: auto; padding:15px 0px;}
+
+.submenu02 {width:100%; }
+.submenu02 ul {clear:both; width:100%;}
+.submenu02 ul li {float:left; width:25%; text-align:center; padding:15px 0px; color:#FFCCBC; background:url(../img/mtip.png) no-repeat 0% 50% #F58220; font-size:100%; font-weight:bold; border-bottom:1px solid #D2451A;}
+.submenu02 ul .noneli {float:left; width:25%; text-align:center; color:#FFCCBC; background:#F58220; font-size:100%; font-weight:bold; border-bottom:1px solid #D2451A;}
+.submenu02 ul li a{display: block; width: auto; padding:15px 0px;}
+
+.submenu03 {width:100%; }
+.submenu03 ul {clear:both; width:100%;}
+.submenu03 ul li {float:left; width:25%; text-align:center; color:#ffe2af; background:url(../img/mtip.png) no-repeat 0% 50% #FFC154; font-size:100%; font-weight:bold; border-bottom:1px solid #D2451A;}
+.submenu03 ul li a{display: block; width: auto; padding:15px 0px;}
+.submenu03 ul .noneli {float:left; width:25%; text-align:center; padding:15px 0px; color:#FFCCBC; background:#FFC154; font-size:100%; font-weight:bold; border-bottom:1px solid #D2451A;}
+
+
+
+.contents {width:95%; margin:50px auto; padding-top:6%; text-align:left;}
+
+.subtitle {font-size: 16px; position: relative;}
+.subtitle .bullet_vline{display: inline-block; width: 3px; height: 14px; background: #444; vertical-align: middle; margin-top: -3px; margin-right: 7px;}
+
+.sel_area {position:absolute; top: -3px; right: 0px;}
+.sel_area .all{position:absolute; top:-22px; right:10px; }
+
+.sub01 {width:100%; margin-top:20px; text-align:center;}
+.sub01 img {width:100%;}
+
+.sub02 {width:100%; margin-top:15px; text-align:left;}
+.sub02 img {width:100%;}
+
+.sub03 {width:100%; margin-top:30px; text-align:left; position:relative;}
+.sub03 img {width:100%;}
+.sub03 .sub03_txt { background:url(../img/boxtip.png) no-repeat; width:100%; position:absolute; bottom:0px; left:0px; color:#fff; padding:15px 0;}
+
+.footer {width:100%;}
+.footer img {width:100%;}
+
+ 
+ 
+/* 1024이하 일때 */
+@media all and (max-width:1024px) {
+	
+	#wrap {width:100%; margin:0px auto; text-align:center;}
+
+}

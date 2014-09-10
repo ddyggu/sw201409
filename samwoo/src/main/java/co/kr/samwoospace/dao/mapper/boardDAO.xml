@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kr.samwoospace.dao.boardDAO">
+
+
+<!-- SELECT QUERY -->
+<select id="selectLastId" resultType="int">
+	select @@Identity as idx
+</select>
+
+<select id="selectPagingInfo" parameterType="String" resultType="paging">
+	select pageSize, pageCount, bbsId from paging where bbsId = #{bbsId}
+</select>
+
+<select id="selectListBoardRecord" parameterType="paging" resultType="boardRecord">
+	select num, title, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName
+	from(
+		select row_number() over(order by num desc) as rownum, 
+		num, title, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName
+		from notice
+	) notice_view
+	where 
+			rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+</select>
+
+<select id="selectListRecruitRecord" parameterType="paging" resultType="recruitRecord">
+	select num, title, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName,
+		    <!-- 추가된 필드 -->
+		     division, career, convert(varchar(20),startDate,126) as startDate, convert(varchar(20),endDate,126) as endDate
+	from(
+		select row_number() over(order by num desc) as rownum, 
+		num, title, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName, 
+		<!-- 추가된 필드 -->
+		division, career, startDate, endDate
+		from recruit
+	) recruit
+	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+</select>
+
+<select id="selectListConsultRecord" parameterType="paging" resultType="consultRecord">
+	select num, company, name, tel1, tel2, tel3, email1, email2, title, contents, date,
+		    a_writer, a_answer, a_date, readCounts
+	from(
+		select row_number() over(order by num desc) as rownum, 
+		num, company, name, tel1, tel2, tel3, email1, email2, title, contents, date, 
+		a_writer, a_answer, a_date, readCounts
+		from consult
+	) consult_view
+	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+</select>
+
+<select id="selectListClubRecord" parameterType="paging" resultType="clubRecord">
+	select num, title, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName, 
+		    facebook, twitter, clubname, replace(encodedFileName, '/', '') as encodedFileName, thumbUrl
+	from(
+		select row_number() over(order by c.num desc) as rownum, 
+		c.num, c.title, c.contents, c.date, c.readCounts, c.groupNum, c.step, c.depth, c.bbsId, c.bbsName,
+		c.facebook, c.twitter, c.clubname, f.encodedFileName, f.thumbUrl
+		from club as c left outer join filestore as f
+		on c.num = f.boardNum
+		and c.bbsId = f.bbsId
+	) club_view
+	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+</select>
+
+<select id="selectListPopupRecord" parameterType="paging" resultType="popupRecord">
+	select num, title, convert(varchar(20),startDate,102) as startDate, convert(varchar(20), endDate,102) as endDate, expose, width, height, 
+			positionTop, positionLeft
+				from (
+					select row_number() over(order by num desc) as rownum, 
+					num, title, startDate, endDate, expose, width, height, positionTop, positionLeft, bbsId, bbsName
+					from popup 
+				) popup_view 
+	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+</select>
+
+<select id="selectListTechRecord" parameterType="paging" resultType="techRecord">
+	select num, title, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName,
+		    division, replace(encodedFileName, '/', '') as encodedFileName, fileName, thumbUrl
+	from(
+		select row_number() over(order by t.num desc) as rownum, 
+		t.num, t.title, t.contents, t.date, t.readCounts, t.groupNum, t.step, t.depth, t.bbsId, t.bbsName, 
+		t.division, f.encodedFileName, f.fileName, f.thumbUrl
+		from technology as t left outer join fileStore as f
+		on t.num = f.boardNum 
+		and t.bbsId = f.bbsId
+	) board_view
+	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+</select>
+
+<select id="selectListResultRecord" parameterType="paging" resultType="resultRecord">
+	select num, title, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName, 
+		    <!-- 추가된 필드 -->
+		    division, mainExpose, replace(encodedFileName, '/','') as encodedFileName, fileName, thumbUrl
+	from(
+		select row_number() over(order by r.num desc) as rownum, 
+		r.num, r.title, r.contents, r.date, r.readCounts, r.groupNum, r.step, r.depth, r.bbsId, r.bbsName, 
+		r.division, r.mainExpose, f.encodedFileName, f.fileName, f.thumbUrl
+		from result as r left outer join fileStore as f
+		on r.num = f.boardNum
+		and r.bbsId = f.bbsId
+		<if test="param != null">
+			<if test='param.containsKey("num") and param.get("num") == 1'>
+				where r.division='감리'
+			</if>
+			<if test='param.containsKey("num") and param.get("num") == 2'>
+				where r.division='설계'
+			</if>
+			<if test='param.containsKey("num") and param.get("num") == 3'>
+				where r.division='미디어 사업'
+			</if>
+			<if test='param.containsKey("num") and param.get("num") == 4'>
+				where r.division='기술연구소'
+			</if>
+		</if>
+	) result_view
+	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+</select>
+
+<select id="selectListResultRecordByDivision" parameterType="HashMap" resultType="resultRecord">
+	select num, title, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName, 
+		    <!-- 추가된 필드 -->
+		    division, mainExpose, replace(encodedFileName, '/','') as encodedFileName, fileName, thumbUrl
+	from(
+		select row_number() over(order by r.num desc) as rownum, 
+		r.num, r.title, r.contents, r.date, r.readCounts, r.groupNum, r.step, r.depth, r.bbsId, r.bbsName, 
+		r.division, r.mainExpose, f.encodedFileName, f.fileName, f.thumbUrl
+		from result as r left outer join fileStore as f
+		on r.num = f.boardNum
+		and r.bbsId = f.bbsId
+		where r.division = #{division}
+	) result_view
+	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+</select>
+
+<select id="selectListFaqRecord" parameterType="paging" resultType="faqRecord">
+	select num, question, answer
+	from(
+		select row_number() over(order by num desc) as rownum, 
+		num, question, answer
+		from faq
+	) faq_view 
+	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+</select>
+
+
+<select id="selectOneBoardRecord" parameterType="int" resultType="boardRecord">
+	select num, title, writer, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName
+	from notice
+	where num=#{boardNum};
+</select>
+
+<select id="selectOneRecruitRecord" parameterType="int" resultType="recruitRecord">
+	select num, title, writer, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName, 
+			<!-- 기본에서 추가된 필드 -->
+			division, career, convert(varchar(20),startDate,126) as startDate, convert(varchar(20),endDate,126) as endDate, mainExpose 
+	from recruit
+	where num=#{boardNum};
+</select>
+
+<select id="selectOneConsultRecord" parameterType="int" resultType="consultRecord">
+	select num, company, name, tel1, tel2, tel3, email1, email2, title, contents, date, a_writer, a_answer, a_date, readCounts
+	from consult
+	where num=#{boardNum};
+</select>
+
+<select id="selectOneFaqRecord" parameterType="int" resultType="faqRecord">
+	select  num, question, answer
+	from faq
+	where num=#{boardNum};
+</select>
+
+<select id="selectOneClubRecord" parameterType="int" resultType="clubRecord">
+	select c.num, c.title, c.writer, c.contents, c.date, c.readCounts, c.groupNum, c.step, c.depth, c.bbsId, c.bbsName, 
+			c.facebook, c.twitter, c.clubname, f.encodedFileName, f.thumbUrl
+	from club as c left outer join filestore as f
+	on c.num = f.boardNum
+	and c.bbsId = f.bbsId
+	where c.num=#{boardNum};
+</select>
+
+<select id="selectOnePopupRecord" parameterType="int" resultType="popupRecord">
+	select num, title, startDate, endDate, expose, width, height, positionTop, positionLeft, bbsId, bbsName
+	from popup 
+	where num=#{boardNum}
+</select>
+
+<select id="selectOneTechRecord" parameterType="int" resultType="techRecord">
+	select t.num, t.title, t.contents, t.date, t.readCounts, t.groupNum, t.step, t.depth, t.bbsId, t.bbsName,  
+			t.division, replace(f.encodedFileName,'/','') as encodedFileName, f.fileName, f.bbsId, f.thumbUrl
+	from technology as t left outer join fileStore as f
+	on t.num = f.boardNum
+	and t.bbsId = f.bbsId
+	where t.num=#{boardNum}
+</select>
+
+<select id="selectOneResultRecord" parameterType="int" resultType="resultRecord">
+	select r.num, r.title, r.writer, r.contents, r.date, r.readCounts, r.groupNum, r.step, r.depth, r.bbsId, r.bbsName,
+			r.division, r.mainExpose, replace(f.encodedFileName,'/','') as encodedFileName, f.fileName, f.thumbUrl
+	from result as r left outer join fileStore as f
+	on r.num = f.boardNum
+	and r.bbsId = f.bbsId
+	where r.num=#{boardNum};
+</select>
+
+<select id="selectTotalCount" resultType="int" parameterType="paging">
+	select count(*) from ${bbsId}
+	<if test='param != null'>
+		<if test='param.containsKey("num") and param.get("num") == 1'>
+			where division='감리'
+		</if>
+		<if test='param.containsKey("num") and param.get("num") == 2'>
+			where division='설계'
+		</if>
+		<if test='param.containsKey("num") and param.get("num") == 3'>
+			where division='미디어 사업'
+		</if>
+		<if test='param.containsKey("num") and param.get("num") == 4'>
+			where division='기술연구소'
+		</if>
+	</if>
+</select>
+
+
+<!-- SELECT QUERY END -->
+
+
+
+
+
+
+<!-- INSERT QUERY -->
+
+<insert id="insertBoardRecord" parameterType="boardRecord">
+	insert into notice(title, writer, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName)
+	values(#{title}, #{writer}, #{contents}, getDate(), 1, 0, 0, 0, #{bbsId}, #{bbsName})
+</insert>
+<insert id="insertRecruitRecord" parameterType="recruitRecord">
+	insert into recruit(title, writer, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName,
+							division, career, startDate, endDate, mainExpose)
+	values(#{title}, #{writer}, #{contents}, getDate(), 1, 0, 0, 0, #{bbsId}, #{bbsName}, 
+							#{division}, #{career}, #{startDate}, #{endDate}, #{mainExpose})
+</insert>
+<insert id="insertConsultRecord" parameterType="consultRecord">
+	insert into consult(company, name, tel1, tel2, tel3, email1, email2, title, contents, date, readCounts)
+	values(#{company}, #{name}, #{tel1}, #{tel2}, #{tel3}, #{email1}, #{email2}, #{title}, #{contents}, getDate(), 1)
+</insert>
+
+<insert id="insertFaqRecord" parameterType="faqRecord">
+	insert into faq(question, answer) values(#{question}, #{answer})
+</insert>
+<insert id="insertClubRecord" parameterType="clubRecord">
+	insert into club(title, writer, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName,
+							facebook, twitter, clubname)
+	values(#{title}, #{writer}, #{contents}, getDate(), 1, 0, 0, 0, #{bbsId}, #{bbsName},
+							#{facebook}, #{twitter}, #{clubname})
+</insert>
+
+<insert id="insertPopupRecord" parameterType="popupRecord">
+	insert into popup(title, startDate, endDate, expose, width, height, positionTop, positionLeft, bbsId, bbsName) 
+	values(#{title}, #{startDate}, #{endDate}, #{expose}, #{width}, #{height}, #{positionTop}, #{positionLeft}, #{bbsId}, #{bbsName})
+</insert>
+
+<insert id="insertTechRecord" parameterType="techRecord">
+	insert into technology(title, writer, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName,
+							division)
+	values(#{title}, #{writer}, #{contents}, getDate(), 1, 0, 0, 0, #{bbsId}, #{bbsName}, 
+			#{division})
+</insert>
+
+<insert id="insertResultRecord" parameterType="resultRecord">
+	insert into result(title, writer, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName,
+							division, mainExpose)
+	values(#{title}, #{writer}, #{contents}, getDate(), 1, 0, 0, 0, #{bbsId}, #{bbsName}, 
+			#{division}, #{mainExpose})
+</insert>
+
+<!-- INSERT QUERY END -->
+
+
+
+<!-- UPDATE QUERY -->
+
+<update id="updateViewCount" parameterType="hashMap">
+	update ${bbsId} set readCounts = readCounts + 1 where num=#{boardNum}
+</update>
+
+<update id="updateBoardRecord" parameterType="boardRecord">
+update notice
+set title=#{title}, writer=#{writer}, contents=#{contents}, date=getDate()
+where num=#{num}
+</update>
+
+<update id="updateRecruitRecord" parameterType="recruitRecord">
+	update recruit
+	set title=#{title}, writer=#{writer}, contents=#{contents}, date=getDate(), 
+    	 division=#{division}, career=#{career}, startDate=#{startDate}, endDate=#{endDate}, mainExpose=#{mainExpose}  	 
+	where num=#{num}
+</update>
+
+<update id="updateFaqRecord" parameterType="faqRecord">
+	update faq
+	set question=#{question}, answer=#{answer}   	 
+	where num=#{num}
+</update>
+
+<update id="updateConsultRecord" parameterType="consultRecord">
+	update consult
+	set title=#{title}, writer=#{writer}, contents=#{contents}, date=getDate(), 
+    	 questioner=#{questioner}, result=#{result}, answer=#{answer}, answerDate=#{answerDate}  	 
+	where num=#{num}
+</update>
+
+<update id="updateConsultAnswer" parameterType="consultRecord">
+	update consult
+	set a_writer=#{a_writer}, a_answer=#{a_answer}, a_date=getDate()
+	where num=#{num}
+</update>
+
+<update id="updateClubRecord" parameterType="clubRecord">
+	update club
+	set title=#{title}, writer=#{writer}, contents=#{contents}, date=getDate(),
+		 facebook=#{facebook}, twitter=#{twitter}, clubname=#{clubname}
+	where num=#{num}
+</update>
+
+<update id="updateTechRecord" parameterType="techRecord">
+	update technology
+	set title=#{title}, writer=#{writer}, contents=#{contents}, date=getDate(),
+		 division=#{division}
+	where num=#{num}
+</update>
+
+<update id="updateResultRecord" parameterType="resultRecord">
+	update result
+	set title=#{title}, writer=#{writer}, contents=#{contents}, date=getDate(),
+		 division=#{division}, mainExpose=#{mainExpose}
+	where num=#{num}
+</update>
+
+<update id="updatePopupRecord" parameterType="popupRecord">
+	update popup
+	set title=#{title}, startDate=#{startDate}, endDate=#{endDate}, expose=#{expose},
+	     width=#{width}, height=#{height}, positionTop=#{positionTop}, positionLeft=#{positionLeft}      
+	where num=#{num}
+</update>
+
+<!-- UPDATE QUERY END -->
+
+
+
+
+
+<!-- DELETE QUERY  -->
+
+<delete id="deleteRecord" parameterType="hashMap">
+delete from ${bbsId} where num=#{num}
+</delete>
+
+<!-- DELETE QUERY END -->
+
+</mapper>

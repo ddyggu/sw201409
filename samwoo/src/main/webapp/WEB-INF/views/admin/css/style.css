@@ -1,0 +1,111 @@
+@charset "utf-8";
+
+/* Common */
+body{font-family:돋움,Dotum,Arial,Helvetica,sans-serif;line-height:120%; }
+body{color:#666666; font-size:12px; line-height:120%; word-wrap:break-word; word-break:break-all; background:url(../img/admin_bg.jpg);}
+
+*{margin: 0;padding:0;border:0;}
+ul,ol, li{list-style:none}
+a{color:inherit;text-decoration:none}
+table {border-collapse: collapse ;border-spacing: 0;}
+img,fieldset{border:0; vertical-align:middle;}
+em,address,i ,u ,b{font-style:normal}
+input,textarea {font-size: 100%; font-weight:inherit; vertical-align:middle; font-family:돋움,Dotum,Arial,Helvetica,sans-serif;}
+input.text {}
+select {-webkit-border-radius: none;font-size: 100%; font-weight:inherit; vertical-align:middle; font-family:돋움,Dotum,Arial,Helvetica,sans-serif; background:#F7F7F7;font-size: 13px;}
+button {cursor:pointer; margin:0px;padding:0px;}
+
+.ml10 {margin-left:10px;}
+.mr10 {margin-right:10px;}
+.m1050 {margin:10px 0 10px 50px;}
+.mt10 {margin-top:10px;}
+.mt15 {margin-top:15px;}
+.mt20 {margin-top:20px;}
+.mt30 {margin-top:30px;}
+.mt40 {margin-top:40px;}
+.mt45 {margin-top:45px;}
+.mt57 {margin-top:57px;}
+.mt84 {margin-top:84px;}
+.mt5 {margin-top:5px;}
+.m1020 {margin:10px 20px;}
+.m10 {margin:10px 0;}
+.m4015 {margin:40px 0 15px 0;}
+.m20 {margin:20px 0;}
+.c01 {color:#535353; vertical-align:middle;}
+.c02 {color:#9F9F9F; vertical-align:middle;}
+.c03 {color:#C3C3C3; vertical-align:middle;}
+.c04 {color:#A2A2A2; font-size:12px; vertical-align:middle;}
+.c05 {color:#D79100; font-size:14px; margin-bottom:10px; vertical-align:middle;}
+.f18 {font-size:16px; }
+.f15 {font-size:15px;}
+.f14 {font-size:14px;}
+.f13 {font-size:13px;}
+.w170 {width:170px;}
+.w40 {width:35px;}
+.w72 {width:72px;}
+.w95 {width:95%;}
+.w15 {width:15%;}
+
+.vm {vertical-align:middle;}
+.txleft {text-align:left;}
+
+#wrap {width:1207px; margin:15px auto;}
+#topwrap {background:url(../img/admin_top.png) no-repeat; width:1207px; height:80px; position:relative;}
+#topwrap .top_btn {position:absolute; top:35px; right:45px;}
+#topwrap .top_txt {position:absolute; top:40px; left:230px; font-weight:bold;}
+#footwrap {background:url(../img/admin_bottom.png) no-repeat; width:1207px; height:150px;}
+
+.admin_contents {background:url(../img/admin_bg.png) repeat-y; width:1207px; min-height:500px; position:relative;}
+.left_menu {position:absolute; top:0px; left:14px;}
+.contents_wrap {width:900px; margin-left:249px; padding-top:60px; clear:both;}
+.title_area {width:100%; border-bottom:1px solid #EBEDED; padding-bottom:14px; margin-bottom:30px;}
+
+.btn_area {width:100%; position:relative; clear:both; margin-top:10px;}
+.pagging {position:absolute; top:0; right:0px; font-family:나눔고딕,NanumGothic,NG,돋움,Dotum,Arial,Helvetica,sans-serif;}
+.pagging ul {}
+.pagging ul li {float:left; width:23px; height:25px; margin-left:5px;}
+.pagging ul .num{ width:23px; height:21px; margin-left:5px; text-align:center; font-weight:bold; font-size:12px; background:url(../img/pagging_bg.gif) no-repeat; padding-top:5px;}
+.pagging ul .num_on{ width:23px; height:21px; margin-left:5px; text-align:center; font-weight:bold; font-size:12px; background:url(../img/pagging_bg.gif) no-repeat; padding-top:5px; color:#DA4544;}
+
+
+.btn_wrap {width:100%; text-align:right; margin-top:10px;}
+.tip_wrap {width:100%; height:1px; clear:both;}
+
+.aborad01 {width:100%; margin:5px 0 20px 0;}
+.aborad01 tr td {padding:10px 0; text-align:center;}
+.aborad01 .onc {background:#FCFCFC;}
+.aborad01 tr th {height:40px; background:#CAD3D6; color:#fff;}
+.aborad01 tr th {height:40px; background:#CAD3D6; color:#fff;}
+.aborad01 tr .tip01 {background:url(../img/tip01.gif) no-repeat left #CAD3D6;}
+.aborad01 tr .tip02 {background:url(../img/tip02.gif) no-repeat right #CAD3D6;}
+.aborad01 tr .tleft {text-align:left; padding-left:15px;}
+
+.aborad01_view {width:100%; margin:50px 0 25px 0; color:#999999;}
+.aborad01_view tr th {border-bottom:1px solid #DFDFDF; border-top:2px solid #CAD3D6; background:#FBFBFB; padding:10px 0; font-size:13px; text-align:left; font-weight:normal;}
+.aborad01_view tr th {border-bottom:1px solid #DFDFDF; border-bottom:2px solid #CAD3D6; background:#FBFBFB; padding:10px 0; font-size:13px; text-align:left; font-weight:normal;}
+
+.aborad01_view tr .onb { padding:10px 0; font-size:13px; text-align:center; font-weight:bold; color:#666666;}
+.aborad01_view tr .onb01 { padding:10px 0px 10px 20px; font-size:13px; text-align:left; font-weight:bold; color:#666666;}
+.aborad01_view tr .subject { padding:10px 0; font-size:13px; text-align:left;}
+.aborad01_view tr td {border-bottom:1px solid #DFDFDF; padding:10px 0; font-size:13px; text-align:center;}
+.aborad01_view tr .content001 {text-align:left; padding:30px; line-height:150%;}
+
+.aborad01_write {width:100%;border-top:2px solid #CAD3D6; margin:50px 0 25px 0;}
+.aborad01_write tr td {border-bottom:1px solid #DFDFDF; padding:10px 20px; font-size:13px; text-align:left;}
+.aborad01_write tr th {border-bottom:1px solid #DFDFDF; padding:10px 20px; font-size:13px; text-align:left; background:#FBFBFB;}
+.ainp01 {width:100%; height:18px; background:#fff; border:1px solid #ddd; padding:3px; color:#666666;}
+.ainp02 {width:100%; height:154px; background:#fff; border:1px solid #ddd; padding:3px; color:#666666;}
+.ainp03 {width:100%; height:59px; background:#fff; border:1px solid #ddd; padding:3px; color:#666666;}
+.ainp04 {width:158px; height:18px; background:#fff; border:1px solid #ddd; padding:3px; color:#666666;}
+.ainp05 {width:164px; height:24px; background:#fff; border:1px solid #ddd; color:#666666;}
+.ainp06 {width:100%; height:24px; background:#fff; border:1px solid #ddd; padding:3px; color:#666666;}
+.file_txt {font-size:12px; margin-top:5px; color:#999999;}
+.file_txt01 {font-size:12px; color:#999999;}
+.spic {width:78px; height:48px; border:1px solid #EAEAEA;}
+
+#login_wrap {width:433px; height:372px; background:url(../img/login_box.png) no-repeat; position:absolute; left:50%; top:50%; margin-left:-215px; margin-top:-200px; }
+#login_wrap .login {position:relative;}
+#login_wrap .login .id_area {position:absolute; top:170px; left:80px; background:url(../img/login_id.png) no-repeat; width:260px; height:50px;}
+#login_wrap .login .pw_area {position:absolute; top:225px; left:80px; background:url(../img/login_pw.png) no-repeat; width:260px; height:50px;}
+#login_wrap .login .lgoin_btn {position:absolute; top:286px; left:85px;}
+.ipt {background:none; border:none; color:#c1c1c1; height:14px; padding:5px; width:190px; margin:15px 0 0 40px;}

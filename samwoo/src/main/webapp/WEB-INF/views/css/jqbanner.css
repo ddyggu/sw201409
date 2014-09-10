@@ -1,0 +1,79 @@
+#object01 img{ 
+	border: none;
+}
+
+#object01 { 
+	position:relative;
+	width:195px; height:195px; 
+	overflow:hidden;
+}
+
+#object01 .img01{
+	position:absolute;
+	width:195px; height:195px; 
+	font-family: Arial, Verdana, Sans-Serif;
+	font-weight: bold;
+	font-size: 18px;
+	letter-spacing: -1px;
+	text-align: left;
+}
+
+#object02 img{ 
+	border: none;
+}
+
+#object02 { 
+	position:relative;
+	width:195px; height:195px; 
+	overflow:hidden;
+}
+
+#object02 .img02{
+	position:relative;
+	width:900px; height:195px; 
+	font-family: Arial, Verdana, Sans-Serif;
+	font-weight: bold;
+	font-size: 18px;
+	letter-spacing: -5px;
+	text-align: left;
+}
+
+#object03 img{ 
+	border: none;
+}
+
+#object03 { 
+	position:relative;
+	width:195px; height:195px; 
+	overflow:hidden;
+}
+
+#object03 .img03{
+	position:absolute;
+	width:195px; height:195px; 
+	font-family: Arial, Verdana, Sans-Serif;
+	font-weight: bold;
+	font-size: 18px;
+	letter-spacing: -1px;
+	text-align: left;
+}
+
+#object04 img{ 
+	border: none;
+}
+
+#object04 { 
+	position:relative;
+	width:195px; height:195px; 
+	overflow:hidden;
+}
+
+#object04 .img04{
+	position:absolute;
+	width:195px; height:195px; 
+	font-family: Arial, Verdana, Sans-Serif;
+	font-weight: bold;
+	font-size: 18px;
+	letter-spacing: -1px;
+	text-align: left;
+}
