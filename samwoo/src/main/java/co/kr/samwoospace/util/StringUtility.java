@@ -14,6 +14,8 @@ public  interface StringUtility {
 
 	  public  String buildString(Object paramObject1, Object paramObject2);
 
+	  public String removeHTML(String htmlString);
+	  
 	  public String getFileExtension(String fileName);
 	  
 	  public  boolean validTableName(String paramString);

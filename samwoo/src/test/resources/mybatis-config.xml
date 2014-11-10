@@ -19,6 +19,7 @@
 		<typeAlias alias="boardRecord" type="co.kr.samwoospace.bean.BoardRecord"/>
 		<typeAlias alias="member" type="co.kr.samwoospace.bean.Member"/>
 		<typeAlias alias="encodedFile" type="co.kr.samwoospace.bean.EncodedFile"/>
+		<typeAlias alias="clubInfoRecord" type="co.kr.samwoospace.bean.ClubInfoRecord"/>
 		<!--  
 		<typeAlias alias="al" type="java.util.List"/>
 		<typeAlias alias="Map" type="java.util.Map"/>

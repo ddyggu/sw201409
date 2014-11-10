@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="include/head.jsp" %>
 
+
 <div class="location">
 	<div class="map_navi">
 		Home<img src="img/arrow.png" class="ar"/>Community<img src="img/arrow.png" class="ar"/>채용공고
@@ -11,7 +12,10 @@
 <div id="contents_wrap">
 	<img src="img/career_title01.jpg">
 	<div class="sub06">
-
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.samwoospace.co.kr/career01">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	<div class="fb-like" data-share="true" data-width="450" data-show-faces="true">
+	</div>
 		<table class="borad02_view">
 			<colgroup>
 				<col width="10%">
@@ -22,6 +26,7 @@
 				<col width="10%">
 				<col width="10%">
 				<col width="*">
+				<col width="10%">
 			</colgroup>
 			<tr>
 				<th class="onb">업무</th>
@@ -32,13 +37,15 @@
 				<th>${recruitRecord.isEnd}</th>
 				<th class="onb">모집기간</th>
 				<th>${recruitRecord.startDate} ~ ${recruitRecord.endDate}</th>
+				<th class="onb">조회수</th>
+				<th>${recruitRecord.readCounts}</th>
 			</tr>
 			<tr>
 				<td class="onb">제목</td>
-				<td colspan="7" class="subject">${recruitRecord.title}</td>
+				<td colspan="9" class="subject">${recruitRecord.title}</td>
 			</tr>
 			<tr>
-				<td colspan="8" style="padding:30px 0;">
+				<td colspan="10" style="padding:30px 0;">
 					<div class="content001">
 					${recruitRecord.contents}
 					</div>

@@ -22,14 +22,6 @@ import co.kr.samwoospace.service.FileService;
 import co.kr.samwoospace.util.Paging;
 
 
-/**
- * °ü¸®ÀÚ ¸Ş´º FAQ °ü¸®(result) ¿äÃ»Ã³¸® ´ã´ç ÄÁÆ®·Ñ·¯<br/>
- * FAQ °ü¸® List °ü·Ã ¿äÃ»Àº ListController¿¡¼­ °øÅëÀ¸·Î Ã³¸®ÇÔ<br/>
- * <br/>
- * @author roscoe
- *
- */
-
 @Controller
 @SessionAttributes({"member","faqRecord","faq_fileList"})
 public class FaqController {
@@ -44,10 +36,10 @@ public class FaqController {
 	private FileService fileService;
 	
 	private static final String table = "faq";
-	private static final String table_ko = "ÀÚÁÖ¹¯´ÂÁú¹®";
+	private static final String table_ko = "ìì£¼ë¬»ëŠ”ì§ˆë¬¸";
 	
-	private static final String insert_s_msg = "FAQ µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
-	private static final String update_s_msg = "FAQ ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
+	private static final String insert_s_msg = "FAQ ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
+	private static final String update_s_msg = "FAQ ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
 	
 	@RequestMapping("/admin/faq")
 	public String faqList(@RequestParam(required=false) Integer pageNum, Model model) {
@@ -81,9 +73,9 @@ public class FaqController {
 	@RequestMapping("/admin/faqWrite")
 	public String faqWrite(@RequestParam(required=false) Integer num, Model model) { 
 		
-		// num(¼öÁ¤ÇÒ °Ô½Ã¹° ¹øÈ£)ÀÌ ÀÖ´Â °æ¿ì´Â ¼öÁ¤, ¾ø´Â °æ¿ì´Â ¾²±â
+		
 		if(num == null) {
-			model.addAttribute("faqRecord", new FaqRecord()); // SessionAttributesÀÇ record¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+			model.addAttribute("faqRecord", new FaqRecord()); 
 			model.addAttribute("faq_fileList", new ArrayList<EncodedFile>());
 			return "/admin/"+table+"_write";
 		} else {
@@ -99,7 +91,7 @@ public class FaqController {
 		
 	    ResponStatus respon = new ResponStatus(true, "");
 		
-		// ¼öÁ¤ ÆäÀÌÁö¿¡¼­ÀÇ ¿äÃ»ÀÌ¸é update
+
 		if(sqlType != null) {
 			record.setNum(num);
 			boardService.updateFaqRecord(record);

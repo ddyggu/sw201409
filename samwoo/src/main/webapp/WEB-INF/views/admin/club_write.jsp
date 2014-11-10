@@ -39,6 +39,7 @@ createEditor1 = function(holder, id) {
 
 $(function() {
 	createEditor1(oEditors, "contents");
+	document.getElementById("clubname").value = '${clubRecord.clubNum}';
 });
 
 
@@ -54,6 +55,13 @@ function showHTML() {
 	
 function submitContents(elClickedObj) {
 	oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+	
+	var clubnum = document.getElementById("clubname").value;
+	if(clubnum == '' || clubnum == '동호회 선택') {
+		alert("동호회를 선택하여 주십시오");
+		return false;
+	}
+	
 	
 	if(document.getElementById("title").value=="") {
 		alert("제목을 입력하여 주십시오");
@@ -82,6 +90,7 @@ function setDefaultFont() {
 		<%@ include file="include/admin_head.jsp" %>
 		
 		<div class="title_area">
+			<!-- 동호회 게시물 관리 -->
 			<img src="/admin/img/title07.gif"/>
 		</div>
 		<form name="clubForm" id="clubForm" action="/admin/clubWrite" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
@@ -91,8 +100,17 @@ function setDefaultFont() {
 				<col width="*">
 			</colgroup>
 			<tr>
-				<th>이름</th>
-				<td><input type="text" name="clubname" class="ainp01" value="${clubRecord.clubname}"/></td>
+				<th>동호회명</th>
+				<td>
+					<select id="clubname" name="clubNum" class="ainp05">
+						<c:forEach var="clubInfo"  items="${clubInfoList}">
+						<option value="${clubInfo.num}">${clubInfo.clubname}</option>
+						</c:forEach>
+					</select>
+				</td>
+			</tr>
+				<th>제목</th>
+				<td><input type="text" name="title" class="ainp01" value="${clubRecord.title}"/></td>
 			</tr>
 			<tr>
 				<th>내용</th>
@@ -119,7 +137,7 @@ function setDefaultFont() {
 				<th>SNS 링크</th>
 				<td>
 					<input type="text" name="facebook" class="ainp01" onfocus="this.value==this.defaultValue?this.value='':void(0);" onblur="this.value==''?this.value=this.defaultValue:void(0);" value='${clubRecord.facebook }' />
-					<p class="mt5"><input type="text" name="twitter" class="ainp01" onfocus="this.value==this.defaultValue?this.value='':void(0);" onblur="this.value==''?this.value=this.defaultValue:void(0);" value=''${clubRecord.twitter}/></p>
+					<p class="mt5"><input type="text" name="twitter" class="ainp01" onfocus="this.value==this.defaultValue?this.value='':void(0);" onblur="this.value==''?this.value=this.defaultValue:void(0);" value='${clubRecord.twitter}'/></p>
 				</td>
 			</tr>
 			<c:if test="${sqlType != null}">
@@ -128,7 +146,7 @@ function setDefaultFont() {
 				</c:if>
 		</table>
 		<div class="btn_wrap">
-			<input type="submit" style="background-image:url('/admin/img/btn_confirm.gif'); width:100px; height:45px; cursor:pointer;" value=""/>  
+			<input type="submit" style="background-image:url('/admin/img/btn_confirm.gif'); width:55px; height:24px; cursor:pointer;" value=""/>  
 			<a href="/admin/club"><img src="/admin/img/btn_cancle.gif" /></a>
 		</div>
 

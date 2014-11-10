@@ -21,7 +21,7 @@
 				<img src="/admin/img/title08.gif"/>
 			</div>
 	
-			<p align="right"><a href="/admin/popup_write"><img src="/admin/img/btn_apply.gif"></a></p>
+			<p align="right"><a href="/admin/popupWrite"><img src="/admin/img/btn_apply.gif"></a></p>
 
 			<form name="listForm" id="listForm" method="post" action="/admin/delete">
 			<table class="aborad01">

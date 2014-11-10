@@ -21,6 +21,7 @@
 				<li><a href="/admin/consult" rel="ov"><img src="/admin/img/amenu05.gif"></a></li>
 				<li><a href="/admin/faq" rel="ov"><img src="/admin/img/amenu06.gif"></a></li>
 				<li><a href="/admin/club" rel="ov"><img src="/admin/img/amenu07.gif"></a></li>
+				<li><a href="/admin/clubInfo" rel="ov"><img src="/admin/img/amenu07.gif"></a></li>
 				<li><a href="/admin/popup" rel="ov"><img src="/admin/img/amenu08.gif"></a></li>
 			<ul>
 		</div>

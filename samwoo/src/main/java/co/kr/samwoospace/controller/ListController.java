@@ -13,14 +13,6 @@ import co.kr.samwoospace.bean.ResponStatus;
 import co.kr.samwoospace.service.BoardService;
 import co.kr.samwoospace.service.FileService;
 
-/**
- * °ü¸®ÀÚ ¸Ş´ºÀÇ ¸®½ºÆ® ÆäÀÌÁö ÄÁÆ®·Ñ·¯<br/>
- * (Àü ¸Ş´º °øÅë)<br/>
- * <br/>
- * co.kr.samwoospace.bean.bbsName°ú DB Table name°ú 1:1 
- * 
- * @author roscoe
- */
 
 @Controller
 @SessionAttributes({"member", "record"})
@@ -32,15 +24,7 @@ public class ListController {
 	@Resource(name="fileService")
 	private FileService fileService;
 	
-	/**
-	 * °ü¸®ÀÚ ¸Ş´ºÀÇ ¸®½ºÆ® ÆäÀÌÁö¸¦ °ü¸®ÇÏ´Â ÄÁÆ®·Ñ·¯<br/>
-	 * (Àü ¸Ş´º °øÅë)<br/>
-	 * 
-	 * @param bbsId - °Ô½ÃÆÇ¸í (DBÅ×ÀÌºí¸í°ú ¸ÅÄª)
-	 * @param pageNum - ¿äÃ»µÇ´Â ÆäÀÌÁö ¹øÈ£
-	 * @param model - view·Î ¸®ÅÏµÇ´Â ¸ğµ¨°ª
-	 * @return
-	 */
+	
 	@RequestMapping(value="/admin/board")
 	public String BoardList(@RequestParam String bbsId, @RequestParam(required=false) Integer pageNum, Model model) {
 		/*
@@ -55,13 +39,7 @@ public class ListController {
 		return null;
 	}
 	
-	/**
-	 * °ü¸®ÀÚ ¸Ş´ºÀÇ ¸®½ºÆ® ÆäÀÌÁö »èÁ¦ ¿äÃ»À» Ã³¸®ÇÏ´Â ÄÁÆ®·Ñ·¯<br/>
-	 * <br/>
-	 * @param boardNum - Ã¼Å©¹Ú½º¿¡ Ã¼Å©·Î »èÁ¦ ¿äÃ»¹ŞÀº °Ô½Ã¹°ÀÇ ¹øÈ£µé<br/>
-	 * 							   ("°Ô½ÃÆÇID"&"°Ô½Ã¹°¹øÈ£" , "°Ô½ÃÆÇID"&"°Ô½Ã¹°¹øÈ£"ÀÇ ÇüÅÂ·Î ±¸ºĞµÊ)<br/>
-	 * @return
-	 */
+	
 	@RequestMapping(value="/admin/delete")
 	public String BoardDelete(@RequestParam String boardNum, RedirectAttributes redirect) {
 		String[] requiredRecord = boardNum.split(",");
@@ -79,8 +57,8 @@ public class ListController {
 		
 		}
 		
-		ResponStatus respon = new ResponStatus(true, "»èÁ¦°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+		ResponStatus respon = new ResponStatus(true, "ì‚­ì œê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
 		redirect.addFlashAttribute("respon", respon);
-		return "redirect:/admin/board?bbsId="+bbsId;
+		return "redirect:/admin/"+bbsId;
 	}
 }

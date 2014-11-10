@@ -1,9 +1,8 @@
 package co.kr.samwoospace.service;
 
-import java.io.BufferedInputStream;
+
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import javax.annotation.Resource;
 
 import net.coobird.thumbnailator.Thumbnails;
 
-import org.apache.tika.Tika;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -66,21 +64,19 @@ public class FileServiceImpl implements FileService {
 				
 				if(originalName != null) {
 					
-					System.out.println(contentType);
-					
 					if(originalName.equals("") == false) {
 						encodedName = stringUtil.encodedFileName(originalName);
-						/* È®ÀåÀÚ °Ë»ç
+						// í™•ì¥ì ê²€ì‚¬
 						if(stringUtil.isIllegalExtension(originalName)) {
 							respon.setStatus(false);
-							respon.setMessage("¾÷·ÎµåÇÒ ¼ö ¾ø´Â ÆÄÀÏÀÔ´Ï´Ù.("+originalName+")");
+							respon.setMessage("ì—…ë¡œë“œí•  ìˆ˜ ì—†ëŠ” íŒŒì¼ì…ë‹ˆë‹¤.("+originalName+")");
 							continue;
 						}
-						*/
-						
+
+						// MimeType ê²€ì‚¬
 						if(stringUtil.isIllegalMimeType(contentType)) {
 							respon.setStatus(false);
-							respon.setMessage("¾÷·ÎµåÇÒ ¼ö ¾ø´Â ÇüÅÂÀÇ ÆÄÀÏÀÔ´Ï´Ù.("+originalName+")");
+							respon.setMessage("ì—…ë¡œë“œí•  ìˆ˜ ì—†ëŠ” í˜•íƒœì˜ íŒŒì¼ì…ë‹ˆë‹¤.("+originalName+")");
 							continue;
 						}
 						
@@ -92,29 +88,28 @@ public class FileServiceImpl implements FileService {
 						encodeFile.setEncodedFileName(encodedName);			
 						encodeFile.setThumbUrl("/thumb_"+encodedName.replaceFirst("/", ""));
 						
-						// º¹¼ö ÆÄÀÏ ¾÷·Îµå Çã¿ë ¿©ºÎ
+						// ë³µìˆ˜ íŒŒì¼ ì—…ë¡œë“œ í—ˆìš© ì—¬ë¶€
 						if(moreThanOne == false) {
 							List<EncodedFile> fileList = this.selectFileInfo(bbsId, num);
 							if(fileList.size() >= 1) {
 								respon.setStatus(false);
-								respon.setMessage("µÎ °³ ÀÌ»óÀÇ ÆÄÀÏÀº ¾÷·Îµå ÇÒ ¼ö ¾ø½À´Ï´Ù. \\n ÀÌ¹Ì ¾÷·ÎµåµÇ¾î ÀÖ´Â ÆÄÀÏÀ» »èÁ¦ÇÑ ÈÄ Àç½ÃµµÇÏ¿© ÁÖ½Ê½Ã¿À");
+								respon.setMessage("ë‘ ê°œ ì´ìƒì˜ íŒŒì¼ì€ ì—…ë¡œë“œ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. \\n ì´ë¯¸ ì—…ë¡œë“œë˜ì–´ ìˆëŠ” íŒŒì¼ì„ ì‚­ì œí•œ í›„ ì¬ì‹œë„í•˜ì—¬ ì£¼ì‹­ì‹œì˜¤");
 								continue;
 							}
 						}
-						
-						// ±âÁ¸¿¡ Á¸ÀçÇÏ´Â ÆÄÀÏÀÎÁö È®ÀÎ
+						// ê¸°ì¡´ì— ì¡´ì¬í•˜ëŠ” íŒŒì¼ì¸ì§€ í™•ì¸
 						EncodedFile dbFile = this.selectFileInfoByType(encodeFile);
 						
-						// °°Àº °Ô½Ã¹°¹øÈ£(dbFile.getBoardNum()·Î ¾ò¾îÁö´Â ¹øÈ£)¿¡ °°Àº ÆÄÀÏÀº ¾÷·Îµå ºÒ°¡
+						// ê°™ì€ ê²Œì‹œë¬¼ë²ˆí˜¸(dbFile.getBoardNum()ë¡œ ì–»ì–´ì§€ëŠ” ë²ˆí˜¸)ì— ê°™ì€ íŒŒì¼ì€ ì—…ë¡œë“œ ë¶ˆê°€
 						if(dbFile != null && dbFile.getBoardNum() == num) {
 							respon.setStatus(false);
-							respon.setMessage("°°Àº ÀÌ¸§ÀÇ ÆÄÀÏÀº ¾÷·Îµå ÇÒ ¼ö ¾ø½À´Ï´Ù. ("+dbFile.getFileName()+")");
+							respon.setMessage("ê°™ì€ ì´ë¦„ì˜ íŒŒì¼ì€ ì—…ë¡œë“œ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.("+dbFile.getFileName()+")");
 							continue;
 						} else {
-							// °ËÁõ ÀıÂ÷ Åë°ú ÈÄ ¾÷·Îµå ÁøÇà
-							locateFileOnServer(file, encodeFile);  		// ½ÇÁ¦ ¼­¹ö ¾÷·Îµå
- 							ThumbnailUpload(encodeFile);      // ½æ³×ÀÏ »ı¼º, ¾÷·Îµå
-							fileDao.insertFileName(encodeFile);   	   // ÆÄÀÏÁ¤º¸ DB ÀúÀå
+							// ê²€ì¦ ì¢…ë£Œ í›„ ì—…ë¡œë“œ ë° DB ì €ì¥
+							locateFileOnServer(file, encodeFile);  		
+ 							ThumbnailUpload(encodeFile);      
+							fileDao.insertFileName(encodeFile);   	   
 						}
 					}
 				}	

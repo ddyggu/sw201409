@@ -128,7 +128,7 @@ function setDefaultFont() {
 				<th>모집부분</th>
 				<td>
 					<select name="division" id="division" class="ainp05">
-						<option value="감리" selected>감리</option>
+						<option value="건설사업관리부" selected>건설사업관리부</option>
 						<option value="설계">설계</option>
 						<option value="미디어 사업">미디어 사업</option>
 					</select>
@@ -189,7 +189,7 @@ function setDefaultFont() {
 			
 
 			<div class="btn_wrap">
-				<input type="submit"  style="background-image:url('/admin/img/btn_confirm.gif'); width:100px; height:45px; cursor:pointer;" value=""/>  
+				<input type="submit"  style="background-image:url('/admin/img/btn_confirm.gif'); width:55px; height:24px; cursor:pointer;" value=""/>  
 				<a href="/admin/recruit"><img src="/admin/img/btn_cancle.gif" /></a>
 			</div>
 

@@ -1,7 +1,6 @@
 package co.kr.samwoospace.controller;
 
 import java.text.ParseException;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -15,16 +14,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.kr.samwoospace.bean.BoardRecord;
+import co.kr.samwoospace.bean.ClubInfoRecord;
+import co.kr.samwoospace.bean.ClubRecord;
 import co.kr.samwoospace.bean.ConsultRecord;
+import co.kr.samwoospace.bean.Division;
 import co.kr.samwoospace.bean.EncodedFile;
 import co.kr.samwoospace.bean.FaqRecord;
 import co.kr.samwoospace.bean.Param;
+import co.kr.samwoospace.bean.PopupRecord;
 import co.kr.samwoospace.bean.RecruitRecord;
 import co.kr.samwoospace.bean.ResultRecord;
 import co.kr.samwoospace.bean.TechRecord;
 import co.kr.samwoospace.service.BoardService;
 import co.kr.samwoospace.service.FileService;
 import co.kr.samwoospace.util.Paging;
+import co.kr.samwoospace.util.StringUtility;
 
 @Controller
 public class MenuController {
@@ -35,11 +39,27 @@ public class MenuController {
 	@Resource(name="fileService")
 	private FileService fileService;
 	
+	@Resource(name="stringUtility")
+	private StringUtility stringUtil;
+	
 	
 	@RequestMapping(value="/")
-	public String findindex(Device device) {
+	public String findindex(Device device, Model model) {
 		if(device.isMobile()) { return "m/index_m";
-		} else { return "/index"; }
+		} else { 
+			List<PopupRecord> popupList = boardService.indexPopupList();
+			model.addAttribute("popupList", popupList);
+			return "/index"; 
+		}
+	}
+	
+	@RequestMapping(value="/popup")
+	public String indexPopup(@RequestParam int num, Model model) {
+		PopupRecord record = boardService.selectOnePopupRecord(num);
+		List<EncodedFile> encodedFile = fileService.selectFileInfo("popup", num);
+		model.addAttribute("popup", record);
+		model.addAttribute("file", encodedFile.get(0));
+		return "/popup";
 	}
 	
 	@RequestMapping(value="/about01")
@@ -84,36 +104,91 @@ public class MenuController {
 	}
 	
 	@RequestMapping(value="/about07")
-	public String about07(@RequestParam(required=false) Integer pageNum, @RequestParam(required=false) Integer m, Model model) {
+	public String about07(@RequestParam(required=false) Integer pageNum, @RequestParam(required=false) String menu, @RequestParam(required=false) Integer m, Model model) {
 		
 		if(pageNum == null) { pageNum = 1; }
 		
-		Paging paging = boardService.selectPagingInfo("technology", "/about07", pageNum);
+		Param<String,Object> param = new Param<String,Object>();
+		param.put("menu", menu);
+		Paging paging = boardService.selectPagingInfoByCondition("technology", "/about07", pageNum, 9, param);
 		List<TechRecord> techList = boardService.ListTechRecord(paging);
 		
 		model.addAttribute("techList", techList);
+		model.addAttribute("menu", menu);
 		model.addAttribute("paging", paging.makePageGroup());
 		model.addAttribute("m", m);
 		
-		return  "/about07";
+		return "/about07";
 	}
 	
 	@RequestMapping(value="/project01")
-	public String findProject1(Device device) {
+	public String findProject1(Device device, Model model, @RequestParam(required=false) Integer pageNum) {
 		
-		if(device.isMobile()) { return "m/project01_m";
+		if(pageNum==null) { pageNum = 1; }
+		
+		if(device.isMobile()) { 
+			Param<String,Object> param = new Param<String,Object>();
+			param.put("division", "A");
+			param.put("category", "All");
+			param.put("viewType", "cube");
+			
+			Paging paging = boardService.selectPagingInfoByCondition("result", "/project01", pageNum, 9, param);
+			List<ResultRecord> resultList = boardService.ListResultRecord(paging);
+			
+			model.addAttribute("resultList",  resultList);
+			model.addAttribute("paging", paging.makePageGroup());
+			model.addAttribute("division", "A");
+			model.addAttribute("category", "All");
+			model.addAttribute("viewType", "cube");
+			model.addAttribute("name", Division.valueOf("A").getName());
+			return "m/project01_m";
 		} else { return "/project"; }
 	}
 	
 	@RequestMapping(value="/project02")
-	public String findProject2(Device device) {
-		if(device.isMobile()) { return "m/project02_m"; 
+	public String findProject2(Device device, Model model, @RequestParam(required=false) Integer pageNum) {
+		if(pageNum==null) { pageNum = 1; }
+		
+		if(device.isMobile()) { 
+			Param<String,Object> param = new Param<String,Object>();
+			param.put("division", "B");
+			param.put("category", "All");
+			param.put("viewType", "cube");
+			
+			Paging paging = boardService.selectPagingInfoByCondition("result", "/project02", pageNum, 9, param);
+			List<ResultRecord> resultList = boardService.ListResultRecord(paging);
+			
+			model.addAttribute("resultList",  resultList);
+			model.addAttribute("paging", paging.makePageGroup());
+			model.addAttribute("division", "B");
+			model.addAttribute("category", "All");
+			model.addAttribute("viewType", "cube");
+			model.addAttribute("name", Division.valueOf("B").getName());
+			return "m/project02_m";
+			
 		} else { return "/project"; }
 	}
 	
 	@RequestMapping(value="/project03")
-	public String findProject3(Device device) {
-		if(device.isMobile()) { return "m/project03_m";  
+	public String findProject3(Device device, Model model, @RequestParam(required=false) Integer pageNum) {
+		if(pageNum==null) { pageNum = 1; }
+		
+		if(device.isMobile()) {
+			Param<String,Object> param = new Param<String,Object>();
+			param.put("division", "C");
+			param.put("category", "All");
+			param.put("viewType", "cube");
+			
+			Paging paging = boardService.selectPagingInfoByCondition("result", "/project03", pageNum, 9, param);
+			List<ResultRecord> resultList = boardService.ListResultRecord(paging);
+			
+			model.addAttribute("resultList",  resultList);
+			model.addAttribute("paging", paging.makePageGroup());
+			model.addAttribute("division", "C");
+			model.addAttribute("category", "All");
+			model.addAttribute("viewType", "cube");
+			model.addAttribute("name", Division.valueOf("C").getName());
+			return "m/project03_m";  
 		} else { return "/project";}
 	}
 	
@@ -148,13 +223,20 @@ public class MenuController {
 	
 	
 	@RequestMapping(value="/project")
-	public String project(@RequestParam(required=false) Integer pageNum, @RequestParam(required=false) Integer m, @RequestParam(required=false) Integer num, Model model) {
-		
+	public String project(@RequestParam(required=false) Integer pageNum, @RequestParam(required=false) Integer m, 
+						  @RequestParam(defaultValue="cube") String viewType, @RequestParam(defaultValue="A") String division, 
+						  @RequestParam(defaultValue="All") String category, @RequestParam(required=false) String searchWord, Model model) {
+	
 		if(pageNum == null) { pageNum = 1; }
-		if(num == null) { num = 1; }
+		if(m == null) { m = 1; }
 		
 		Param<String,Object> param = new Param<String,Object>();
-		param.put("num", num);
+		param.put("division", division);
+		param.put("category", category);
+		param.put("viewType", viewType);
+		if(searchWord != null && searchWord.equals("") == false) {
+			param.put("searchWord", searchWord);
+		}
 		
 		Paging paging = boardService.selectPagingInfoByCondition("result", "/project", pageNum, 9, param);
 		List<ResultRecord> resultList = boardService.ListResultRecord(paging);
@@ -162,15 +244,39 @@ public class MenuController {
 		model.addAttribute("resultList",  resultList);
 		model.addAttribute("paging", paging.makePageGroup());
 		model.addAttribute("m", m);
+		model.addAttribute("division", division);
+		model.addAttribute("category", category);
+		model.addAttribute("viewType", viewType);
+		model.addAttribute("name", Division.valueOf(division).getName());
 		
-		return  "/project";
+		if(division.equals("A") && viewType.equals("cube")) {
+			return  "/project_cube";
+		} else if(division.equals("A") && viewType.equals("list")) {
+			return "/project_list";
+		} else if(viewType.equals("cube")) {
+			return "/project_cube_a";
+		} else {
+			return "/project_list_a";
+		}
+
 	}
 	
 	@RequestMapping("/career01") 
-	public String career01(Device device, @RequestParam(required=false) Integer m, @RequestParam(required=false) Integer pageNum, Model model) {
+	public String career01(Device device, @RequestParam(required=false) Integer m, @RequestParam(required=false) Integer pageNum, 
+						   @RequestParam(required=false) String searchType_career, @RequestParam(required=false) String searchWord_career,  Model model) {
 		if(pageNum == null) { pageNum = 1; }
 		
 		Param<String,Object> param = new Param<String,Object>();
+		
+		if(searchType_career != null) {
+			System.out.println(searchType_career);
+			param.put("searchType_career", searchType_career);
+		}  
+		if(searchWord_career != null) {
+			System.out.println(searchType_career);
+			param.put("searchWord_career", searchWord_career);
+		}
+		
 		Paging paging = boardService.selectPagingInfoByCondition("recruit", "/career01", pageNum, 10, param);
 		
 		List<RecruitRecord> recruitList  = boardService.ListRecruitRecord(paging);
@@ -188,9 +294,9 @@ public class MenuController {
 			int result = currentDate.compareTo(endDate);
 			
 			if(result == 1) {
-				re.setIsEnd("¸ðÁý¸¶°¨");
+				re.setIsEnd("ëª¨ì§‘ì™„ë£Œ");
 			} else {
-				re.setIsEnd("¸ðÁýÁß");
+				re.setIsEnd("ëª¨ì§‘ì¤‘");
 			}
 		}
 
@@ -226,9 +332,9 @@ public class MenuController {
 		int result = currentDate.compareTo(endDate);
 		
 		if(result == 1) {
-			record.setIsEnd("¸ðÁý¸¶°¨");
+			record.setIsEnd("ëª¨ì§‘ì™„ë£Œ");
 		} else {
-			record.setIsEnd("¸ðÁýÁß");
+			record.setIsEnd("ëª¨ì§‘ì¤‘");
 		}
 		
 		model.addAttribute("recruitRecord", record);		
@@ -252,10 +358,18 @@ public class MenuController {
 	}
 	
 	@RequestMapping("/community01")
-	public String community01(@RequestParam(required=false) Integer pageNum, @RequestParam(required=false) Integer m, Model model) {
+	public String community01(@RequestParam(required=false) Integer pageNum, @RequestParam(required=false) Integer m, 
+							  @RequestParam(required=false) String searchType_notice, @RequestParam(required=false) String searchWord_notice, Model model) {
 		if(pageNum == null) { pageNum = 1; }
 		
 		Param<String,Object> param = new Param<String,Object>();
+		if(searchType_notice != null) {
+			param.put("searchType_notice", searchType_notice);
+		} 
+		if(searchWord_notice != null) {
+			param.put("searchWord_notice", searchWord_notice);	
+		}
+		
 	    Paging paging = boardService.selectPagingInfoByCondition("notice", "/community01", pageNum, 10, param);
 	    List<BoardRecord> noticeList = boardService.ListBoardRecord(paging);
 	    
@@ -304,6 +418,17 @@ public class MenuController {
 	
 	@RequestMapping("/community05")
 	public String community05(@RequestParam(required=false) Integer m, Model model) {
+		
+		Param<String,Object> param = new Param<String,Object>();
+		Paging paging = boardService.selectPagingInfoByCondition("club", "/community05", 1, 3, param);
+		List<ClubInfoRecord> InfoList = boardService.ListClubInfoRecord(paging);
+		
+		for(ClubInfoRecord re : InfoList) {
+			String cleanedDescription = stringUtil.removeHTML(re.getDescription());
+			re.setDescription(cleanedDescription);
+		}
+		
+		model.addAttribute("InfoList", InfoList);
 		model.addAttribute("m", m);
 		return "/community05";
 	}
@@ -339,6 +464,44 @@ public class MenuController {
 		model.addAttribute("consult_fileList", fileList);
 		
 		return "/community04_view";
+	}
+	
+	@RequestMapping("/community05_list")
+	public String community05_list(@RequestParam int num, @RequestParam(required=false) Integer pageNum, @RequestParam(required=false) Integer m, Model model) {
+		if(pageNum == null) { pageNum = 1; }
+		
+		Param<String,Object> param = new Param<String,Object>();
+		param.put("num", num);
+		Paging paging = boardService.selectPagingInfoByCondition("club", "/community05_list", pageNum, 9, param);
+		List<ClubRecord> clubList = boardService.ListClubRecord(paging);
+		ClubInfoRecord info = boardService.selectOneClubInfoRecord(num);
+		
+		model.addAttribute("ClubInfo", info);
+		model.addAttribute("ClubList", clubList);
+		model.addAttribute("paging", paging.makePageGroup());
+		model.addAttribute("m", m);
+		return "/community05_list";
+	}
+	
+	
+	@RequestMapping("/community05_view")
+	public String community05_view(@RequestParam Integer num, @RequestParam(required=false) Integer pageNum, Model model) {
+		if(pageNum == null) { pageNum = 1; }
+		
+		ClubRecord record = boardService.selectOneClubRecord(num);
+		List<EncodedFile> fileList = fileService.selectFileInfo("club", num);
+		boardService.updateViewCount("club", num);
+		
+		model.addAttribute("record", record);		
+		model.addAttribute("page", pageNum);
+		model.addAttribute("fileList", fileList);
+		
+		return "/community05_view";
+	}
+	
+	@RequestMapping("/redirectTo")
+	public String redirectTo(@RequestParam(value="url") String redirectUrl) {
+		return "redirect:" + redirectUrl;
 	}
 	
 }

@@ -1,7 +1,6 @@
 package co.kr.samwoospace.controller;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.kr.samwoospace.bean.ClubInfoRecord;
 import co.kr.samwoospace.bean.ClubRecord;
 import co.kr.samwoospace.bean.EncodedFile;
 import co.kr.samwoospace.bean.ResponStatus;
@@ -37,10 +37,10 @@ public class ClubController {
 	private FileService fileService;
 	
 	private static final String table = "club";
-	private static final String table_ko = "µ¿È£È¸";
+	private static final String table_ko = "ë™í˜¸íšŒ";
 	
-	private static final String insert_s_msg = "µ¿È£È¸ µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
-	private static final String update_s_msg = "µ¿È£È¸ ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
+	private static final String insert_s_msg = "ë™í˜¸íšŒ ê²Œì‹œë¬¼ ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
+	private static final String update_s_msg = "ë™í˜¸íšŒ ê²Œì‹œë¬¼ ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
 	
 	@RequestMapping("/admin/club")
 	public String clubList(@RequestParam(required=false) Integer pageNum, Model model) {
@@ -73,10 +73,11 @@ public class ClubController {
 	
 	@RequestMapping("/admin/clubWrite")
 	public String clubWrite(@RequestParam(required=false) Integer num, Model model) { 
+		List<ClubInfoRecord> clubInfoList = boardService.ListAllClubInfoRecord();
+		model.addAttribute("clubInfoList", clubInfoList);
 		
-		// num(¼öÁ¤ÇÒ °Ô½Ã¹° ¹øÈ£)ÀÌ ÀÖ´Â °æ¿ì´Â ¼öÁ¤, ¾ø´Â °æ¿ì´Â ¾²±â
 		if(num == null) {
-			model.addAttribute("clubRecord", new ClubRecord()); // SessionAttributesÀÇ record¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+			model.addAttribute("clubRecord", new ClubRecord()); 
 			model.addAttribute("club_fileList", new ArrayList<EncodedFile>());
 			return "/admin/"+table+"_write";
 		} else {
@@ -87,17 +88,19 @@ public class ClubController {
 	}
 	
 	@RequestMapping(value="/admin/clubWrite", method=RequestMethod.POST)
-	public String clubWrite(ClubRecord record, @RequestParam(required=false) String sqlType, 
+	public String clubWrite(ClubRecord record,  @RequestParam(required=false) String sqlType, 
 									@RequestParam(required=false) Integer num, MultipartHttpServletRequest request, RedirectAttributes redirect, Model model) {
+		
+		ClubInfoRecord clubInfo = boardService.selectOneClubInfoRecord(record.getClubNum());
 		
 	    ResponStatus respon = new ResponStatus(true, "");
 		String writer = memberDao.getAdminMemberInfo().getName();
 		record.setWriter(writer); 			
-		record.setTitle("Á¦¸ñ¾øÀ½");        
+		record.setClubname(clubInfo.getClubname());
 	   	record.setBbsId(table);            
 	   	record.setBbsName(table_ko);
-		
-		// ¼öÁ¤ ÆäÀÌÁö¿¡¼­ÀÇ ¿äÃ»ÀÌ¸é update
+	   	
+	   	
 		if(sqlType != null) {
 			record.setNum(num);
 			respon = boardService.updateClubRecord(record, request);
@@ -105,11 +108,11 @@ public class ClubController {
 			respon = boardService.insertClubRecord(record, request);
 		}
 		
-		// ½ÇÆĞÇßÀ» °æ¿ì
+	
 		if(respon.isStatus() == false) {
 			model.addAttribute("respon", respon);
 			model.addAttribute("clubRecord", record);
-			// ¼öÁ¤ ÆäÀÌÁöÀÎ °æ¿ì Ãß°¡·Î ¸®ÅÏ
+		
 			model.addAttribute("sqlType",sqlType);
 			model.addAttribute("num",num);
 			return "/admin/"+table+"_write";

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.ServletContextAware;
 
 public class StringUtilityImpl implements StringUtility {
 
@@ -110,10 +109,21 @@ public class StringUtilityImpl implements StringUtility {
 		this.editorUploadPath = editorUploadPath;
 	}
 
-	
-
-	
-
-  
+	@Override
+	public String removeHTML(String htmlString)
+    {
+        // Remove HTML tag from java String    
+        String noHTMLString = htmlString.replaceAll("\\<.*?\\>", "");
+        
+        // Remove Carriage return from java String
+        noHTMLString = noHTMLString.replaceAll("&nbsp;", "");
+        noHTMLString = noHTMLString.replaceAll("r", "<br/>");
+        
+        // Remove New line from java string and replace html break
+        noHTMLString = noHTMLString.replaceAll("n", " ");
+        noHTMLString = noHTMLString.replaceAll("'", "&#39;");
+        noHTMLString = noHTMLString.replaceAll("\"", "&quot;");
+        return noHTMLString;
+    }
 
 }

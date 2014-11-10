@@ -23,13 +23,6 @@ import co.kr.samwoospace.service.BoardService;
 import co.kr.samwoospace.service.FileService;
 import co.kr.samwoospace.util.Paging;
 
-/**
- * °ü¸®ÀÚ ¸Ş´º Ã¤¿ë°ø°í(recruit) ¿äÃ»Ã³¸® ´ã´ç ÄÁÆ®·Ñ·¯<br/>
- * Ã¤¿ë°ø°í List °ü·Ã ¿äÃ»Àº ListController¿¡¼­ °øÅëÀ¸·Î Ã³¸®ÇÔ<br/>
- * <br/>
- * @author roscoe
- *
- */
 
 @Controller
 @SessionAttributes({"member","recruitRecord","recruit_fileList"})
@@ -45,10 +38,10 @@ public class RecruitController {
 	private FileService fileService;
 	
 	private static final String table = "recruit";
-	private static final String table_ko = "¸ğÁı°ø°í";
+	private static final String table_ko = "ì±„ìš©ê³µê³ ";
 	
-	private static final String insert_s_msg = "¸ğÁı°ø°í µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
-	private static final String update_s_msg = "¸ğÁı°ø°í ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
+	private static final String insert_s_msg = "ì±„ìš©ê³µê³  ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
+	private static final String update_s_msg = "ì±„ìš©ê³µê³  ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
 	
 	@RequestMapping("/admin/recruit")
 	public String popupList(@RequestParam(required=false) Integer pageNum, Model model) {
@@ -82,9 +75,9 @@ public class RecruitController {
 	@RequestMapping("/admin/recruitWrite")
 	public String recruitWrite(@RequestParam(required=false) Integer num, Model model) { 
 
-		// num(¼öÁ¤ÇÒ °Ô½Ã¹° ¹øÈ£)ÀÌ ÀÖ´Â °æ¿ì´Â ¼öÁ¤, ¾ø´Â °æ¿ì´Â ¾²±â
+		
 		if(num == null) {
-			model.addAttribute("recruitRecord", new RecruitRecord()); // SessionAttributesÀÇ record¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+			model.addAttribute("recruitRecord", new RecruitRecord()); 
 			model.addAttribute("recruit_fileList", new ArrayList<EncodedFile>());
 			return "/admin/"+table+"_write";
 		} else {
@@ -105,7 +98,7 @@ public class RecruitController {
 	    record.setBbsName(table_ko);
 	    
 	    
-		// ¼öÁ¤ ÆäÀÌÁö¿¡¼­ÀÇ ¿äÃ»ÀÌ¸é update
+
 		if(sqlType != null) {
 			record.setNum(num);
 			respon = boardService.updateRecruitRecord(record, request);
@@ -113,12 +106,12 @@ public class RecruitController {
 			respon = boardService.insertRecruitRecord(record, request);
 		}
 		
-		// ½ÇÆĞÇßÀ» °æ¿ì
+
 		if(respon.isStatus() == false) {
-			// ºä·Î ÀÔ·ÂÁ¤º¸ ¸®ÅÏ
+
 			model.addAttribute("respon", respon);
 			model.addAttribute("recruitRecord", record);
-			// ¼öÁ¤ ÆäÀÌÁöÀÎ °æ¿ì Ãß°¡·Î ¸®ÅÏ
+
 			model.addAttribute("sqlType",sqlType);
 			model.addAttribute("num",num);
 			return "/admin/"+table+"_write";

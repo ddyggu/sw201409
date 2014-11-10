@@ -2,20 +2,21 @@ package co.kr.samwoospace.service;
 
 
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import co.kr.samwoospace.bean.BoardRecord;
+import co.kr.samwoospace.bean.ClubInfoRecord;
 import co.kr.samwoospace.bean.ClubRecord;
 import co.kr.samwoospace.bean.ConsultRecord;
 import co.kr.samwoospace.bean.FaqRecord;
-
 import co.kr.samwoospace.bean.Param;
 import co.kr.samwoospace.bean.PopupRecord;
 import co.kr.samwoospace.bean.RecruitRecord;
 import co.kr.samwoospace.bean.ResponStatus;
 import co.kr.samwoospace.bean.ResultRecord;
-
 import co.kr.samwoospace.bean.TechRecord;
 import co.kr.samwoospace.dao.boardDAO;
 import co.kr.samwoospace.dao.memberDAO;
@@ -55,6 +56,12 @@ public class BoardServiceImpl implements BoardService {
 	public List<ClubRecord> ListClubRecord(Paging paging) {
 		return boardDao.selectListClubRecord(paging);
 	}
+	
+	@Override
+	public List<ClubInfoRecord> ListClubInfoRecord(Paging paging) {
+		return boardDao.selectListClubInfoRecord(paging);
+		
+	}
 
 	@Override
 	public List<PopupRecord> ListPopupRecord(Paging paging) {
@@ -62,9 +69,15 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public List<PopupRecord> indexPopupList() {
+		return boardDao.indexPopupList();
+	}
+	
+	@Override
 	public List<TechRecord> ListTechRecord(Paging paging) {
 		return boardDao.selectListTechRecord(paging);
 	}
+	
 	
 	@Override
 	public List<ResultRecord> ListResultRecord(Paging paging) {
@@ -74,6 +87,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<FaqRecord> ListFaqRecord(Paging paging) {
 		return boardDao.selectListFaqRecord(paging);
+	}
+	
+	@Override
+	public List<ClubInfoRecord> ListAllClubInfoRecord() {
+		return boardDao.selectAllListClubInfoRecord();
 	}
 	
 	@Override
@@ -107,7 +125,7 @@ public class BoardServiceImpl implements BoardService {
 	public void updateViewCount(String bbsId, int num) {
 		Param<String,Object> param = new Param<String,Object>();
 		param.put("bbsId", bbsId);
-		param.put("num", num);
+		param.put("boardNum", num);
 		boardDao.updateViewCount(param);
 	}
 	
@@ -156,6 +174,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public FaqRecord selectOneFaqRecord(int num) {
 		return boardDao.selectOneFaqRecord(num);
+	}
+	
+	@Override
+	public ClubInfoRecord selectOneClubInfoRecord(int num) {
+		return boardDao.selectOneClubInfoRecord(num);
 	}
 	
 	@Override
@@ -212,6 +235,7 @@ public class BoardServiceImpl implements BoardService {
 		return respon;
 	}
 	
+	
 	@Override
 	public ResponStatus insertResultRecord(ResultRecord resultRecord, MultipartHttpServletRequest request) {
 		boardDao.insertResultRecord(resultRecord);
@@ -226,6 +250,15 @@ public class BoardServiceImpl implements BoardService {
 		boardDao.insertFaqRecord(faqRecord);
 	}
 
+	@Override
+	public ResponStatus insertClubInfoRecord(ClubInfoRecord clubInfoRecord, MultipartHttpServletRequest request) {
+		boardDao.insertClubInfoRecord(clubInfoRecord);
+		
+		int boardNum = boardDao.selectLastId();
+		ResponStatus respon = fileService.FileUpload(request, boardNum, clubInfoRecord.getBbsId(), false);
+		return respon;
+	}
+	
 	@Override
 	public void deleteRecord(String bbsId, int num) {
 		Param<String,Object> param = new Param<String,Object>();
@@ -261,6 +294,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	public void updateConsultAnswer(ConsultRecord consultRecord) {
+		boardDao.updateConsultAnswer(consultRecord);
+	}
+	
+	@Override
 	public ResponStatus updateTechRecord(TechRecord techRecord, MultipartHttpServletRequest request) {
 		boardDao.updateTechRecord(techRecord);
 		ResponStatus respon = fileService.FileUpload(request, techRecord.getNum(), techRecord.getBbsId(), false);
@@ -280,15 +318,26 @@ public class BoardServiceImpl implements BoardService {
 		ResponStatus respon = fileService.FileUpload(request, popupRecord.getNum(), popupRecord.getBbsId(), false);
 		return respon;
 	}
-
+	
+	@Override
+	public ResponStatus updateClubInfoRecord(ClubInfoRecord clubInfoRecord, MultipartHttpServletRequest request) {
+		boardDao.updateClubInfoRecord(clubInfoRecord);
+		ResponStatus respon = fileService.FileUpload(request, clubInfoRecord.getNum(), clubInfoRecord.getBbsId(), false);
+		return respon;
+	}
+	
 	@Override
 	public int selectLastId() {
 		return boardDao.selectLastId();
 	}
 
-	@Override
-	public void updateConsultAnswer(ConsultRecord consultRecord) {
-		boardDao.updateConsultAnswer(consultRecord);
-	}
+	
+
+	
+
+	
+
+	
+	
 
 }

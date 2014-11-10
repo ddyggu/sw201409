@@ -126,7 +126,7 @@ function setDefaultFont() {
 				</c:if>
 			<div class="btn_wrap">
 				<input type="submit" name="noticeForm_submit" id="noticeForm_submit"  
-				style="background-image:url('/admin/img/btn_confirm.gif'); width:100px; height:45px; cursor:pointer;" value=""/>  
+				style="background-image:url('/admin/img/btn_confirm.gif'); width:55px; height:24px; cursor:pointer;" value=""/>  
 				<a href="/admin/notice"><img src="/admin/img/btn_cancle.gif" /></a>
 			</div>
 		</form>

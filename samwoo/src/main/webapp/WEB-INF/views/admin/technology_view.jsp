@@ -46,7 +46,7 @@
 					<td colspan="6" style="padding:30px 0;">
 						<c:choose>
 							<c:when test="${techRecord.encodedFileName == null}">업로드된 이미지가 존재하지 않습니다.</c:when>
-							<c:when test="${techRecord.encodedFileName != null}"><img src="/resources/upload/${techRecord.encodedFileName}" alt="${techRecord.fileName}"/></c:when>
+							<c:when test="${techRecord.encodedFileName != null}"><img src="/resources/upload/${techRecord.encodedFileName}" alt="${techRecord.fileName}" style="width:800px; height:1200px;"/></c:when>
 						</c:choose>
 					</td>
 				</tr>

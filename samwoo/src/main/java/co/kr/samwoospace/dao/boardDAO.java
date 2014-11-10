@@ -2,10 +2,10 @@ package co.kr.samwoospace.dao;
 
 import java.util.List;
 
-
 import java.util.Map;
 
 import co.kr.samwoospace.bean.BoardRecord;
+import co.kr.samwoospace.bean.ClubInfoRecord;
 import co.kr.samwoospace.bean.ClubRecord;
 import co.kr.samwoospace.bean.ConsultRecord;
 import co.kr.samwoospace.bean.FaqRecord;
@@ -25,18 +25,20 @@ public interface boardDAO {
 	List<FaqRecord> selectListFaqRecord(Paging paging);
 	List<ClubRecord> selectListClubRecord(Paging paging);
 	List<PopupRecord> selectListPopupRecord(Paging paging);
+	List<PopupRecord> indexPopupList();
 	List<TechRecord> selectListTechRecord(Paging paging);
 	List<ResultRecord> selectListResultRecord(Paging paging);
+	List<ClubInfoRecord> selectListClubInfoRecord(Paging paging);
+	List<ClubInfoRecord> selectAllListClubInfoRecord();
 	List<ResultRecord> selectListResultRecordByDivision(Map<String,Object> hashMap);
-	
 	List<RecruitRecord> selectListRecruitRecord(int pageNum);
-	
 	
 	BoardRecord selectOneBoardRecord(int num);
 	RecruitRecord selectOneRecruitRecord(int num);
 	FaqRecord selectOneFaqRecord(int num);
 	ConsultRecord selectOneConsultRecord(int num);
 	ClubRecord selectOneClubRecord(int num);
+	ClubInfoRecord selectOneClubInfoRecord(int num);
 	PopupRecord selectOnePopupRecord(int num);
 	TechRecord selectOneTechRecord(int num);
 	ResultRecord selectOneResultRecord(int num);
@@ -48,6 +50,7 @@ public interface boardDAO {
 	void insertRecruitRecord(RecruitRecord recruitRecord);
 	void insertConsultRecord(ConsultRecord consultRecord);
 	void insertClubRecord(ClubRecord clubRecord);
+	void insertClubInfoRecord(ClubInfoRecord clubInfoRecord);
 	void insertPopupRecord(PopupRecord popupRecord);
 	void insertFaqRecord(FaqRecord faqRecord);
 	void insertTechRecord(TechRecord techRecord);
@@ -61,6 +64,7 @@ public interface boardDAO {
 	void updateConsultAnswer(ConsultRecord consultRecord);
 	void updateFaqRecord(FaqRecord faqRecord);
 	void updateClubRecord(ClubRecord clubRecord);
+	void updateClubInfoRecord(ClubInfoRecord clubRecord);
 	void updatePopupRecord(PopupRecord popupRecord);
 	void updateTechRecord(TechRecord techRecord);
 	void updateResultRecord(ResultRecord resultRecord);

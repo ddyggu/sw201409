@@ -24,13 +24,6 @@ import co.kr.samwoospace.service.BoardService;
 import co.kr.samwoospace.service.FileService;
 import co.kr.samwoospace.util.Paging;
 
-/**
- * °ü¸®ÀÚ ¸Ş´º Æ¯Çã/½Å±â¼ú(technology) ¿äÃ»Ã³¸® ´ã´ç ÄÁÆ®·Ñ·¯<br/>
- * <br/>
- * @author roscoe
- *
- */
-
 @Controller
 @SessionAttributes({"member","techRecord","tech_fileList"})
 public class TechController {
@@ -45,10 +38,10 @@ public class TechController {
 	private FileService fileService;
 	
 	private static final String table = "technology";
-	private static final String table_ko = "Æ¯Çã/½Å±â¼ú";
+	private static final String table_ko = "íŠ¹í—ˆ/ì‹ ê¸°ìˆ ";
 	
-	private static final String insert_s_msg = "Æ¯Çã/½Å±â¼ú µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
-	private static final String update_s_msg = "Æ¯Çã/½Å±â¼ú ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
+	private static final String insert_s_msg = "íŠ¹í—ˆ/ì‹ ê¸°ìˆ  ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
+	private static final String update_s_msg = "íŠ¹í—ˆ/ì‹ ê¸°ìˆ  ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
 	
 	
 	@RequestMapping("/admin/technology")
@@ -83,10 +76,10 @@ public class TechController {
 	@RequestMapping("/admin/techWrite")
 	public String techWrite(@RequestParam(required=false) Integer num, SessionStatus status, Model model) { 
 		
-		// num(¼öÁ¤ÇÒ °Ô½Ã¹° ¹øÈ£)ÀÌ ÀÖ´Â °æ¿ì´Â ¼öÁ¤, ¾ø´Â °æ¿ì´Â ¾²±â
+	
 		if(num == null) {
 			status.setComplete();
-			model.addAttribute("techRecord", new TechRecord()); // SessionAttributesÀÇ record¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+			model.addAttribute("techRecord", new TechRecord()); // SessionAttributesï¿½ï¿½ recordï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ñ´ï¿½.
 			model.addAttribute("tech_fileList", new ArrayList<EncodedFile>());
 			return "/admin/"+table+"_write";
 		} else {
@@ -104,11 +97,11 @@ public class TechController {
 	    String writer = memberDao.getAdminMemberInfo().getName();
 		
 		record.setWriter(writer);
-		record.setContents("³»¿ë¾øÀ½");
+		record.setContents("ë‚´ìš©ì—†ìŒ");
 		record.setBbsId(table);
 		record.setBbsName(table_ko);
 		
-		// ¼öÁ¤ ÆäÀÌÁö¿¡¼­ÀÇ ¿äÃ»ÀÌ¸é update
+	
 		if(sqlType != null) {
 			record.setNum(num);
 			respon = boardService.updateTechRecord(record, request);
@@ -116,11 +109,11 @@ public class TechController {
 			respon = boardService.insertTechRecord(record, request);
 		}
 		
-		// ½ÇÆĞÇßÀ» °æ¿ì
+	
 		if(respon.isStatus() == false) {
 			model.addAttribute("respon", respon);
 			model.addAttribute("techRecord", record);
-			// ¼öÁ¤ ÆäÀÌÁöÀÎ °æ¿ì Ãß°¡·Î ¸®ÅÏ
+
 			model.addAttribute("sqlType",sqlType);
 			model.addAttribute("num",num);
 			return "/admin/"+table+"_write";

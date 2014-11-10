@@ -18,9 +18,18 @@
 		select row_number() over(order by num desc) as rownum, 
 		num, title, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName
 		from notice
+		where 1=1
+		<if test="param != null">
+			<if test=' param.get("searchType_notice") == "title"'>
+				and title like '%' + #{param.searchWord_notice} + '%'
+			</if>
+			<if test=' param.get("searchType_notice") == "contents"'>
+				and contents like '%' + #{param.searchWord_notice} + '%'
+			</if>
+		</if>
 	) notice_view
 	where 
-			rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+	rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
 </select>
 
 <select id="selectListRecruitRecord" parameterType="paging" resultType="recruitRecord">
@@ -33,6 +42,15 @@
 		<!-- 추가된 필드 -->
 		division, career, startDate, endDate
 		from recruit
+		where 1=1
+		<if test="param != null">
+			<if test=' param.get("searchType_career") == "title"'>
+				and title like '%' + #{param.searchWord_career} + '%'
+			</if>
+			<if test=' param.get("searchType_career") == "contents"'>
+				and contents like '%' + #{param.searchWord_career} + '%'
+			</if>
+		</if>
 	) recruit
 	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
 </select>
@@ -59,8 +77,40 @@
 		from club as c left outer join filestore as f
 		on c.num = f.boardNum
 		and c.bbsId = f.bbsId
+		<if test='param != null'>
+			where c.clubnum = #{param.num}
+		</if>
 	) club_view
 	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+</select>
+
+<select id="selectListClubInfoRecord" parameterType="paging" resultType="clubInfoRecord">
+	select num, clubname, targetGroup, activityGroup, president, description, facebook, twitter, etc_community, fileName, encodedFileName, thumbUrl
+from(
+		select row_number() over(order by c.num desc) as rownum, 
+		c.num, c.clubname, c.targetGroup, c.activityGroup, c.president, c.description, c.facebook, c.twitter, c.etc_community, f.fileName, f.encodedFileName, f.thumbUrl
+		from clubInfo as c left outer join filestore as f
+		on c.num = f.boardNum
+		and c.bbsId = f.bbsId
+	) clubInfo_view
+where rownum between ((${pageNum}-1) * ${pageSize} + 1) and ${pageNum} * ${pageSize}
+</select>
+
+<select id="selectAllListClubInfoRecord" resultType="clubInfoRecord">
+	select num, clubname, targetGroup, activityGroup, president, description, facebook, twitter, etc_community, fileName, encodedFileName, thumbUrl
+from(
+		select row_number() over(order by c.num desc) as rownum, 
+		c.num, c.clubname, c.targetGroup, c.activityGroup, c.president, c.description, c.facebook, c.twitter, c.etc_community, f.fileName, f.encodedFileName, f.thumbUrl
+		from clubInfo as c left outer join filestore as f
+		on c.num = f.boardNum
+		and c.bbsId = f.bbsId
+	) clubInfo_view
+</select>
+
+
+<select id="indexPopupList"  resultType="popupRecord">
+select num, title, convert(varchar(20), startDate, 126) as startDate, convert(varchar(20), endDate, 126) as endDate, expose, width, height, positionTop, positionLeft, bbsId, bbsName
+from popup  where expose = 'Y';  
 </select>
 
 <select id="selectListPopupRecord" parameterType="paging" resultType="popupRecord">
@@ -84,33 +134,77 @@
 		from technology as t left outer join fileStore as f
 		on t.num = f.boardNum 
 		and t.bbsId = f.bbsId
+		<if test="param != null">
+			<if test='param.menu.equals("A")'>
+				where t.division='특허'
+			</if>
+			<if test='param.menu.equals("B")'>
+				where t.division='신기술'
+			</if>
+		</if>
 	) board_view
 	where rownum between ((${pageNum}-1) * ${pageSize}+1) and ${pageNum} * ${pageSize}
+	
 </select>
+
 
 <select id="selectListResultRecord" parameterType="paging" resultType="resultRecord">
 	select num, title, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName, 
 		    <!-- 추가된 필드 -->
-		    division, mainExpose, replace(encodedFileName, '/','') as encodedFileName, fileName, thumbUrl
+		    division, mainExpose, category, category_name, location, lotArea, totalArea, size, replace(encodedFileName, '/','') as encodedFileName, fileName, thumbUrl
 	from(
 		select row_number() over(order by r.num desc) as rownum, 
 		r.num, r.title, r.contents, r.date, r.readCounts, r.groupNum, r.step, r.depth, r.bbsId, r.bbsName, 
-		r.division, r.mainExpose, f.encodedFileName, f.fileName, f.thumbUrl
+		r.division, r.mainExpose, r.category, r.category_name, r.location, r.lotArea, r.totalArea, r.size, f.encodedFileName, f.fileName, f.thumbUrl
 		from result as r left outer join fileStore as f
 		on r.num = f.boardNum
 		and r.bbsId = f.bbsId
+		where 1=1
 		<if test="param != null">
-			<if test='param.containsKey("num") and param.get("num") == 1'>
-				where r.division='감리'
+		<if test='param.containsKey("division") == true and param.get("division") == "All"'></if>
+			<if test='param.containsKey("division") == true and param.get("division") == "All"'></if>
+			<if test='param.containsKey("division") == true and param.get("division") == "A"'>
+				and r.division='건설사업관리'
 			</if>
-			<if test='param.containsKey("num") and param.get("num") == 2'>
-				where r.division='설계'
+			<if test='param.containsKey("division") == true and param.get("division") == "B"'>
+				and r.division='설계'
 			</if>
-			<if test='param.containsKey("num") and param.get("num") == 3'>
-				where r.division='미디어 사업'
+			<if test='param.containsKey("division") == true and param.get("division") == "C"'>
+				and r.division='미디어 사업'
 			</if>
-			<if test='param.containsKey("num") and param.get("num") == 4'>
-				where r.division='기술연구소'
+			<if test='param.containsKey("division") == true and param.get("division") == "D"'>
+				and r.division='기술연구소'
+			</if>
+			<if test='param.containsKey("category") == true and param.get("category") == "All"'></if>
+			<if test='param.containsKey("category") == true and param.get("category") == "RD"'>
+				and r.category='RD'
+			</if>
+			<if test='param.containsKey("category") == true and param.get("category") == "EDLA"'>
+				and r.category='EDLA'
+			</if>
+			<if test='param.containsKey("category") == true and param.get("category") == "MEWE"'>
+				and r.category='MEWE'
+			</if>
+			<if test='param.containsKey("category") == true and param.get("category") == "ACLE"'>
+				and r.category='ACLE'
+			</if>
+			<if test='param.containsKey("category") == true and param.get("category") == "OF"'>
+				and r.category='OF'
+			</if>
+			<if test='param.containsKey("category") == true and param.get("category") == "MICO"'>
+				and r.category='MICO'
+			</if>
+			<if test='param.containsKey("category") == true and param.get("category") == "PH"'>
+				and r.category='PH'
+			</if>
+			<if test='param.containsKey("category") == true and param.get("category") == "CA"'>
+				and r.category='CA'
+			</if>
+			<if test='param.containsKey("category") == true and param.get("category") == "ETC"'>
+				and r.category='ETC'
+			</if>
+			<if test='param.containsKey("searchWord") == true'>
+				and r.title like '%' + #{param.searchWord} + '%'
 			</if>
 		</if>
 	) result_view
@@ -124,7 +218,7 @@
 	from(
 		select row_number() over(order by r.num desc) as rownum, 
 		r.num, r.title, r.contents, r.date, r.readCounts, r.groupNum, r.step, r.depth, r.bbsId, r.bbsName, 
-		r.division, r.mainExpose, f.encodedFileName, f.fileName, f.thumbUrl
+		r.division, r.mainExpose, r.category, r.category_name, r.location, r.lotArea, r.totalArea, r.size, f.encodedFileName, f.fileName, f.thumbUrl
 		from result as r left outer join fileStore as f
 		on r.num = f.boardNum
 		and r.bbsId = f.bbsId
@@ -172,15 +266,24 @@
 
 <select id="selectOneClubRecord" parameterType="int" resultType="clubRecord">
 	select c.num, c.title, c.writer, c.contents, c.date, c.readCounts, c.groupNum, c.step, c.depth, c.bbsId, c.bbsName, 
-			c.facebook, c.twitter, c.clubname, f.encodedFileName, f.thumbUrl
+			c.facebook, c.twitter, c.clubname, c.clubnum, f.encodedFileName, f.thumbUrl
 	from club as c left outer join filestore as f
 	on c.num = f.boardNum
 	and c.bbsId = f.bbsId
 	where c.num=#{boardNum};
 </select>
 
+<select id="selectOneClubInfoRecord" parameterType="int" resultType="clubInfoRecord">
+	select c.num, c.clubname, c.targetGroup, c.activityGroup, c.president, c.description, c.facebook, c.twitter, c.etc_community,
+	f.fileName, f.encodedFileName, f.thumbUrl
+	from clubInfo as c left outer join filestore as f
+	on c.num = f.boardNum
+	and c.bbsId = f.bbsId
+	where c.num=#{num}
+</select>
+
 <select id="selectOnePopupRecord" parameterType="int" resultType="popupRecord">
-	select num, title, startDate, endDate, expose, width, height, positionTop, positionLeft, bbsId, bbsName
+	select num, title, convert(varchar(20),startDate,126) as startDate, convert(varchar(20), endDate, 126) as endDate, expose, width, height, positionTop, positionLeft, bbsId, bbsName
 	from popup 
 	where num=#{boardNum}
 </select>
@@ -196,7 +299,7 @@
 
 <select id="selectOneResultRecord" parameterType="int" resultType="resultRecord">
 	select r.num, r.title, r.writer, r.contents, r.date, r.readCounts, r.groupNum, r.step, r.depth, r.bbsId, r.bbsName,
-			r.division, r.mainExpose, replace(f.encodedFileName,'/','') as encodedFileName, f.fileName, f.thumbUrl
+			r.division, r.mainExpose, r.category, r.category_name, r.location, r.lotArea, r.totalArea, r.size, replace(f.encodedFileName,'/','') as encodedFileName, f.fileName, f.thumbUrl
 	from result as r left outer join fileStore as f
 	on r.num = f.boardNum
 	and r.bbsId = f.bbsId
@@ -206,17 +309,67 @@
 <select id="selectTotalCount" resultType="int" parameterType="paging">
 	select count(*) from ${bbsId}
 	<if test='param != null'>
-		<if test='param.containsKey("num") and param.get("num") == 1'>
-			where division='감리'
+		where 1=1
+		<if test='param.containsKey("num")'>
+			and clubnum=#{param.num}
 		</if>
-		<if test='param.containsKey("num") and param.get("num") == 2'>
-			where division='설계'
+		<if test='param.containsKey("menu") and param.get("menu") == "A"'>
+			and division='특허'
 		</if>
-		<if test='param.containsKey("num") and param.get("num") == 3'>
-			where division='미디어 사업'
+		<if test='param.containsKey("menu") and param.get("menu") == "B"'>
+			and division='신기술'
 		</if>
-		<if test='param.containsKey("num") and param.get("num") == 4'>
-			where division='기술연구소'
+		<if test='param.containsKey("division") and param.get("division") == "A"'>
+			and division='건설사업관리'
+		</if>
+		<if test='param.containsKey("division") and param.get("division") == "B"'>
+			and division='설계'
+		</if>
+		<if test='param.containsKey("division") and param.get("division") == "C"'>
+			and division='미디어 사업'
+		</if>
+		<if test='param.containsKey("division") and param.get("division") == "D"'>
+			and division='기술연구소'
+		</if>
+		<if test='param.containsKey("category") and param.get("category") == "All"'></if>
+		<if test='param.containsKey("category") and param.get("category") == "RD"'>
+			and category='RD'
+		</if>
+		<if test='param.containsKey("category") and param.get("category") == "EDLA"'>
+			and category='EDLA'
+		</if>
+		<if test='param.containsKey("category") and param.get("category") == "MEWE"'>
+			and category='MEWE'
+		</if>
+		<if test='param.containsKey("category") and param.get("category") == "ETC"'>
+			and category='ETC'
+		</if>
+		<if test='param.containsKey("category") and param.get("category") == "OF"'>
+			and category='OF'
+		</if>
+		<if test='param.containsKey("category") and param.get("category") == "MICO"'>
+			and category='MICO'
+		</if>
+		<if test='param.containsKey("category") and param.get("category") == "CA"'>
+			and category='CA'
+		</if>
+		<if test='param.containsKey("category") and param.get("category") == "PH"'>
+			and category='PH'
+		</if>
+		<if test=' param.get("searchType_career") == "title"'>
+			and title like '%' + #{param.searchWord_career} + '%'
+		</if>
+		<if test=' param.get("searchType_career") == "contents"'>
+			and contents like '%' + #{param.searchWord_career} + '%'
+		</if>
+		<if test=' param.get("searchType_notice") == "title"'>
+			and title like '%' + #{param.searchWord_notice} + '%'
+		</if>
+		<if test=' param.get("searchType_notice") == "contents"'>
+			and contents like '%' + #{param.searchWord_notice} + '%'
+		</if>
+		<if test='param.containsKey("searchWord")'>
+			and title like '%' + #{param.searchWord} + '%'
 		</if>
 	</if>
 </select>
@@ -241,6 +394,7 @@
 	values(#{title}, #{writer}, #{contents}, getDate(), 1, 0, 0, 0, #{bbsId}, #{bbsName}, 
 							#{division}, #{career}, #{startDate}, #{endDate}, #{mainExpose})
 </insert>
+
 <insert id="insertConsultRecord" parameterType="consultRecord">
 	insert into consult(company, name, tel1, tel2, tel3, email1, email2, title, contents, date, readCounts)
 	values(#{company}, #{name}, #{tel1}, #{tel2}, #{tel3}, #{email1}, #{email2}, #{title}, #{contents}, getDate(), 1)
@@ -249,11 +403,17 @@
 <insert id="insertFaqRecord" parameterType="faqRecord">
 	insert into faq(question, answer) values(#{question}, #{answer})
 </insert>
+
 <insert id="insertClubRecord" parameterType="clubRecord">
 	insert into club(title, writer, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName,
-							facebook, twitter, clubname)
+							facebook, twitter, clubname, clubnum)
 	values(#{title}, #{writer}, #{contents}, getDate(), 1, 0, 0, 0, #{bbsId}, #{bbsName},
-							#{facebook}, #{twitter}, #{clubname})
+							#{facebook}, #{twitter}, #{clubname}, #{clubNum})
+</insert>
+
+<insert id="insertClubInfoRecord" parameterType="clubInfoRecord">
+	insert into clubInfo(clubname, targetGroup, activityGroup, president, description, bbsId, bbsName, facebook, twitter, etc_community)
+	values(#{clubname}, #{targetGroup}, #{activityGroup}, #{president}, #{description}, #{bbsId}, #{bbsName}, #{facebook}, #{twitter}, #{etc_community})
 </insert>
 
 <insert id="insertPopupRecord" parameterType="popupRecord">
@@ -270,9 +430,9 @@
 
 <insert id="insertResultRecord" parameterType="resultRecord">
 	insert into result(title, writer, contents, date, readCounts, groupNum, step, depth, bbsId, bbsName,
-							division, mainExpose)
+							division, mainExpose, category, category_name, location, lotArea, totalArea, size)
 	values(#{title}, #{writer}, #{contents}, getDate(), 1, 0, 0, 0, #{bbsId}, #{bbsName}, 
-			#{division}, #{mainExpose})
+			#{division}, #{mainExpose}, #{category}, #{category_name}, #{location}, #{lotArea}, #{totalArea}, #{size})
 </insert>
 
 <!-- INSERT QUERY END -->
@@ -320,7 +480,14 @@ where num=#{num}
 <update id="updateClubRecord" parameterType="clubRecord">
 	update club
 	set title=#{title}, writer=#{writer}, contents=#{contents}, date=getDate(),
-		 facebook=#{facebook}, twitter=#{twitter}, clubname=#{clubname}
+		 facebook=#{facebook}, twitter=#{twitter}, clubname=#{clubname}, clubnum=#{clubNum}
+	where num=#{num}
+</update>
+
+<update id="updateClubInfoRecord" parameterType="clubInfoRecord">
+	update clubInfo
+	set clubname=#{clubname}, targetGroup=#{targetGroup}, activityGroup=#{activityGroup}, president=#{president},
+		 description=#{description}, facebook=#{facebook}, twitter=#{twitter}, etc_community=#{etc_community}
 	where num=#{num}
 </update>
 
@@ -334,7 +501,8 @@ where num=#{num}
 <update id="updateResultRecord" parameterType="resultRecord">
 	update result
 	set title=#{title}, writer=#{writer}, contents=#{contents}, date=getDate(),
-		 division=#{division}, mainExpose=#{mainExpose}
+		 division=#{division}, mainExpose=#{mainExpose}, category=#{category}, category_name=#{category_name},
+		 location=#{location}, lotArea=#{lotArea}, totalArea=#{totalArea}, size=#{size}
 	where num=#{num}
 </update>
 

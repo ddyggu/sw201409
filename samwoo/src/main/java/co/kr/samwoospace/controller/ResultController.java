@@ -1,4 +1,5 @@
 package co.kr.samwoospace.controller;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,20 +15,15 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.kr.samwoospace.bean.EncodedFile;
+import co.kr.samwoospace.bean.Param;
 import co.kr.samwoospace.bean.ResponStatus;
 import co.kr.samwoospace.bean.ResultRecord;
+import co.kr.samwoospace.bean.Category;
 import co.kr.samwoospace.dao.memberDAO;
 import co.kr.samwoospace.service.BoardService;
 import co.kr.samwoospace.service.FileService;
 import co.kr.samwoospace.util.Paging;
 
-/**
- * °ü¸®ÀÚ ¸Ş´º ¼öÇà½ÇÀû(result) ¿äÃ»Ã³¸® ´ã´ç ÄÁÆ®·Ñ·¯<br/>
- * ¼öÇà½ÇÀû List °ü·Ã ¿äÃ»Àº ListController¿¡¼­ °øÅëÀ¸·Î Ã³¸®ÇÔ<br/>
- * <br/>
- * @author roscoe
- *
- */
 
 @Controller
 @SessionAttributes({"member","resultRecord","result_fileList"})
@@ -43,21 +39,32 @@ public class ResultController {
 	private FileService fileService;
 	
 	private static final String table = "result";
-	private static final String table_ko = "¼öÇà½ÇÀû";
+	private static final String table_ko = "ìˆ˜í–‰ì‹¤ì ";
 	
-	private static final String insert_s_msg = "¼öÇà½ÇÀû µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
-	private static final String update_s_msg = "¼öÇà½ÇÀû ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
+	private static final String insert_s_msg = "ìˆ˜í–‰ì‹¤ì  ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
+	private static final String update_s_msg = "ìˆ˜í–‰ì‹¤ì  ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
 	
 	@RequestMapping("/admin/result")
-	public String resultList(@RequestParam(required=false) Integer pageNum, Model model) {
+	public String resultList(@RequestParam(defaultValue="All") String division, @RequestParam(defaultValue="All") String category, 
+							 @RequestParam(required=false) String searchWord, @RequestParam(required=false) Integer pageNum, Model model) {
 		if (pageNum == null) { pageNum = 1; }
 	
-		Paging paging = boardService.selectPagingInfo(table, "result", pageNum);
+		
+		Param<String,Object> param = new Param<String,Object>();
+		param.put("division", division);
+		param.put("category", category);
+		if(searchWord != null && searchWord.equals("") == false) {
+			System.out.println(searchWord);
+			param.put("searchWord", searchWord);
+		}
+		
+		Paging paging = boardService.selectPagingInfoByCondition(table, "result", pageNum, 10, param);
 		List<ResultRecord> resultList = boardService.ListResultRecord(paging);
 		
 		model.addAttribute("resultList", resultList);
 		model.addAttribute("paging", paging.makePageGroup());
-		
+		model.addAttribute("division", division);
+		model.addAttribute("category", category);
 		return "/admin/result"; 
 	}
 	
@@ -80,9 +87,9 @@ public class ResultController {
 	@RequestMapping("/admin/resultWrite")
 	public String resultWrite(@RequestParam(required=false) Integer num, Model model) { 
 		
-		// num(¼öÁ¤ÇÒ °Ô½Ã¹° ¹øÈ£)ÀÌ ÀÖ´Â °æ¿ì´Â ¼öÁ¤, ¾ø´Â °æ¿ì´Â ¾²±â
+		
 		if(num == null) {
-			model.addAttribute("resultRecord", new ResultRecord()); // SessionAttributesÀÇ record¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+			model.addAttribute("resultRecord", new ResultRecord()); 
 			model.addAttribute("result_fileList", new ArrayList<EncodedFile>());
 			return "/admin/"+table+"_write";
 		} else {
@@ -98,12 +105,14 @@ public class ResultController {
 		
 	    ResponStatus respon = new ResponStatus(true, "");
 	    String writer = memberDao.getAdminMemberInfo().getName();
-		record.setWriter(writer);
-		record.setContents("³»¿ë¾øÀ½");
-		record.setBbsId(table);
+		String category_name = Category.valueOf(record.getCategory()).getName();
+	    
+	    record.setWriter(writer);
+		record.setCategory_name(category_name);
+	    record.setBbsId(table);
 		record.setBbsName(table_ko);
 		
-		// ¼öÁ¤ ÆäÀÌÁö¿¡¼­ÀÇ ¿äÃ»ÀÌ¸é update
+		
 		if(sqlType != null) {
 			record.setNum(num);
 			respon = boardService.updateResultRecord(record, request);
@@ -111,12 +120,12 @@ public class ResultController {
 			respon = boardService.insertResultRecord(record, request);
 		}
 		
-		// ½ÇÆĞÇßÀ» °æ¿ì
+
 		if(respon.isStatus() == false) {
-			// ºä·Î ÀÔ·ÂÁ¤º¸ ¸®ÅÏ
+		
 			model.addAttribute("respon", respon);
 			model.addAttribute("resultRecord", record);
-			// ¼öÁ¤ ÆäÀÌÁöÀÎ °æ¿ì Ãß°¡·Î ¸®ÅÏ
+		
 			model.addAttribute("sqlType",sqlType);
 			model.addAttribute("num",num);
 			return "/admin/"+table+"_write";

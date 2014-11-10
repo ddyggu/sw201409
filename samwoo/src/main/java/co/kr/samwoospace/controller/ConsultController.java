@@ -22,14 +22,6 @@ import co.kr.samwoospace.service.BoardService;
 import co.kr.samwoospace.service.FileService;
 import co.kr.samwoospace.util.Paging;
 
-/**
- * °ü¸®ÀÚ ¸Ş´º °í°´¹®ÀÇ(consult) ¿äÃ»Ã³¸® ´ã´ç ÄÁÆ®·Ñ·¯<br/>
- * °í°´¹®ÀÇ List °ü·Ã ¿äÃ»Àº ListController¿¡¼­ °øÅëÀ¸·Î Ã³¸®ÇÔ<br/>
- * <br/>
- * @author roscoe
- *
- */
-
 @Controller
 @SessionAttributes({"member","consultRecord","consult_fileList"})
 public class ConsultController {
@@ -44,10 +36,10 @@ public class ConsultController {
 	private FileService fileService;
 	
 	private static final String table = "consult";
-	private static final String table_ko = "°í°´¹®ÀÇ";
+	private static final String table_ko = "ê³ ê°ë¬¸ì˜";
 	
-	private static final String insert_s_msg = "°í°´¹®ÀÇ ´äº¯µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
-	private static final String update_s_msg = "°í°´¹®ÀÇ ´äº¯ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
+	private static final String insert_s_msg = "ê³ ê°ë¬¸ì˜ ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
+	private static final String update_s_msg = "ê³ ê°ë¬¸ì˜ ë‹µë³€ì´ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.";
 	
 	@RequestMapping("/admin/consult")
 	public String consultList(@RequestParam(required=false) Integer pageNum, Model model) {
@@ -82,7 +74,7 @@ public class ConsultController {
 	public String questionWrite(ConsultRecord record, MultipartHttpServletRequest request, RedirectAttributes redirect) {
 			
 		record.setBbsId("consult");       
-		record.setBbsName("°í°´¹®ÀÇ");
+		record.setBbsName("ê³ ê°ë¬¸ì˜");
 		
 		boardService.insertConsultRecord(record, request);
 		redirect.addFlashAttribute("respon", new ResponStatus(true, insert_s_msg));

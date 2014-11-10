@@ -2,10 +2,10 @@ package co.kr.samwoospace.service;
 
 import java.util.List;
 
-
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import co.kr.samwoospace.bean.BoardRecord;
+import co.kr.samwoospace.bean.ClubInfoRecord;
 import co.kr.samwoospace.bean.ClubRecord;
 import co.kr.samwoospace.bean.ConsultRecord;
 import co.kr.samwoospace.bean.FaqRecord;
@@ -25,7 +25,10 @@ public interface BoardService {
 	List<ConsultRecord> ListConsultRecord(Paging paging);
 	List<FaqRecord> ListFaqRecord(Paging paging);
 	List<ClubRecord> ListClubRecord(Paging paging);
+	List<ClubInfoRecord> ListClubInfoRecord(Paging paging);
+	List<ClubInfoRecord> ListAllClubInfoRecord();
 	List<PopupRecord> ListPopupRecord(Paging paging);
+	List<PopupRecord> indexPopupList();
 	List<ResultRecord> ListResultRecord(Paging paging);
 	
 	BoardRecord selectOneBoardRecord(int num);
@@ -34,23 +37,14 @@ public interface BoardService {
 	ConsultRecord selectOneConsultRecord(int num);
 	FaqRecord selectOneFaqRecord(int num);
 	ClubRecord selectOneClubRecord(int num);
+	ClubInfoRecord selectOneClubInfoRecord(int num);
 	PopupRecord selectOnePopupRecord(int num);
 	ResultRecord selectOneResultRecord(int num);
 	
 	int selectLastId();
 	int selectTotalCount(Paging paging);
 	Paging selectPagingInfo(String bbsId, String pageURL, int pageNum);
-	/**
-	 * 하단부 페이지 네비게이션 태그를 만드는 메소드<br/>
-	 * <br/>
-	 * @param bbsId - DB table 이름
-	 * @param pageURL - 사용할 pageURL
-	 * @param pageNum - 페이지 번호
-	 * @param pageSize - 한 번에 출력할 게시물 수
-	 * @param param - pageURL 뒷부분에 추가적으로 붙일 parameter 목록,<br/>
-	 * 						  HashMap을 상속한 객체이므로 파라미터 이름은 key, 값은 value로 추가하면 된다. 
-	 * @return paging 
-	 */
+	
 	Paging selectPagingInfoByCondition(String bbsId, String pageURL, int pageNum, int pageSize, Param<?, ?> param);
 	
 	void insertFaqRecord(FaqRecord faqRecord, MultipartHttpServletRequest request);
@@ -58,6 +52,7 @@ public interface BoardService {
 	ResponStatus insertBoardRecord(BoardRecord boardRecord, MultipartHttpServletRequest request);
 	ResponStatus insertConsultRecord(ConsultRecord consultRecord, MultipartHttpServletRequest request);
 	ResponStatus insertClubRecord(ClubRecord clubRecord, MultipartHttpServletRequest request);
+	ResponStatus insertClubInfoRecord(ClubInfoRecord clubRecord, MultipartHttpServletRequest request);
 	ResponStatus insertPopupRecord(PopupRecord popupRecord, MultipartHttpServletRequest request);
 	ResponStatus insertTechRecord(TechRecord techRecord, MultipartHttpServletRequest request);
 	ResponStatus insertResultRecord(ResultRecord resultRecord, MultipartHttpServletRequest request);
@@ -69,6 +64,7 @@ public interface BoardService {
 	ResponStatus updateRecruitRecord(RecruitRecord recuirtRecord, MultipartHttpServletRequest request);
 	ResponStatus updateConsultRecord(ConsultRecord consultRecord, MultipartHttpServletRequest request);
 	ResponStatus updateClubRecord(ClubRecord clubRecord, MultipartHttpServletRequest request);
+	ResponStatus updateClubInfoRecord(ClubInfoRecord clubRecord, MultipartHttpServletRequest request);
 	ResponStatus updatePopupRecord(PopupRecord popupRecord, MultipartHttpServletRequest request);
 	ResponStatus updateTechRecord(TechRecord techRecord, MultipartHttpServletRequest request);
 	ResponStatus updateResultRecord(ResultRecord resultRecord, MultipartHttpServletRequest request);

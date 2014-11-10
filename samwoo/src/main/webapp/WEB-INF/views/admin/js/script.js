@@ -49,6 +49,16 @@ $(function(){
 			img.attr("src",img.attr("src").replace("_on.png",".png"));
 		}
 	});
+	
+	$("#listForm").submit(function(e) {
+		
+		if($("#listForm input:checked").length == 0) {
+			alert("삭제할 게시물을 선택하여 주십시오");
+			e.preventDefault();
+		}
+		
+	});
+	
 });
 
 var ver = 0; // Browser Version
@@ -99,8 +109,7 @@ function CheckAll(source) {
 }
 
 function deleteConfirm() {
-	confirm("삭제하시게습니까?")
-	
+	confirm("삭제하시겠습니까?")
 	
 }
 

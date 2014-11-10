@@ -9,7 +9,19 @@
 <link rel="stylesheet" type="text/css" href="/admin/css/style.css"/>
 <script type="text/javascript" src="/admin/js/jquery-1.7.min.js"></script>
 <script type="text/javascript" src="/admin/js/script.js"></script>
+<script>
 
+$(function() {
+	$("#answerForm").submit(function() {
+		var a_answer = $("#a_answer").val();
+	
+		if(a_answer == '') {
+			alert("답변을 입력하여 주십시오");
+			return false;
+		}
+	});
+});
+</script>
 </head>
 <body>
 
@@ -97,10 +109,10 @@
 				<tr>
 					<th>답변달기</th>
 					<td style="background:#FBFBFB;">
-						<textarea type="text" name="a_answer" class="ainp03"></textarea>
+						<textarea type="text" name="a_answer" id="a_answer" class="ainp03"></textarea>
 						<input type="hidden" name="num" value="${consultRecord.num}"/>													
 					</td>
-					<td style="background:#FBFBFB;"><input type="submit"  style="background-image:url('/img/btn_confirm.gif'); width:100px; height:45px; cursor:pointer;" value=""/></td>
+					<td><input type="submit" style="background-image:url('/admin/img/btn_confirm.gif'); width:55px; height:24px; cursor:pointer;" value=""/></td>
 				</tr>
 				
 			</table>

@@ -51,7 +51,7 @@
 					<td colspan="5" class="subject">${recruitRecord.title}</td>
 				</tr>
 				<tr>
-					<td colspan="6" style="padding:30px 0;">
+					<td colspan="6" style="padding:30px 0; padding-left:30px; text-align:left;">
 						${recruitRecord.contents}
 					</td>
 				</tr>

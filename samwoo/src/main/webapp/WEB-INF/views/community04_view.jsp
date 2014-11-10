@@ -8,7 +8,7 @@
 </div>
 
 <div id="contents_wrap">
-	<img src="img/notice_title.jpg">
+	<img src="img/customer_title.jpg">
 	<div class="sub06">
 
 		<table class="borad02_view">

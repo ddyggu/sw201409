@@ -14,32 +14,43 @@
 	<img src="img/career_title01.jpg">
 	<div class="sub06">
 		<div class="gallery_area">
-			<!--  
+			<form id="careerSearch" name="careerSearch" action="/career01" method="get">
 			<div class="select_area">
-				<select name="" class="inp01">
-					<option value="">제목</option>
-					<option value="">내용</option>
+				<select name="searchType_career" class="inp01">
+					<option value="title">제목</option>
+					<option value="contents">내용</option>
 				</select>
 			</div>
 		
 			<div class="search_area">
-				<input type="text" name="" class="inp">
-				<a href="#"><img src="img/btn_search.gif"></a>
+				<input type="text" name="searchWord_career" class="inp">
+				<input type="submit" value="" style="cursor:pointer; width:20px; background-image:url('img/btn_search.gif');"/>
 			</div>
-			-->
+			</form>
 		</div>
 
 		<table class="borad01">
 			<colgroup>
 				<col width="10%">
+				<col width="10%">
 				<col width="15%">
 				<col width="*">
 				<col width="10%">
 				<col width="20%">
+				<col width="5%">
 			</colgroup>
+			<tr>
+				<th>번호</th>
+				<th>업무</th>
+				<th>경력</th>		
+				<th>제목</th>		
+				<th>진행상태</th>		
+				<th>모집기간</th>
+				<th>조회수</th>	
+			</tr>
 			<c:forEach var="record" items="${recruitRecord}">
 			<tr>
-				
+				<td>${record.num}</td>
 				<td><strong class="c01">${record.division}</strong></td>
 				<td><span class="c02">${record.career}</span></td>
 				<td style="text-align:left;">
@@ -47,6 +58,7 @@
 				</td>
 				<td><span class="c02">${record.isEnd}</span></td>
 				<td><span class="c03">${record.startDate} ~ ${record.endDate}</span></td>			
+				<td><span class="c02">${record.readCounts}</span></td>
 			</tr>
 			</c:forEach>
 			

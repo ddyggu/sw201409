@@ -40,6 +40,7 @@ $(function() {
 		showMonthAfterYear: true,
 		yearSuffix: '년'
 	});
+	
 });
 </script>
 
@@ -107,7 +108,7 @@ $(function() {
 		
 
 			<div class="btn_wrap">
-				<input type="submit"  style="background-image:url('/admin/img/btn_confirm.gif'); width:100px; height:45px; cursor:pointer;" value=""/>  
+				<input type="submit"  style="background-image:url('/admin/img/btn_confirm.gif'); width:55px; height:24px; cursor:pointer;" value=""/>  
 				<a href="/admin/popup"><img src="/admin/img/btn_cancle.gif" /></a>
 			</div>
 		</form>	

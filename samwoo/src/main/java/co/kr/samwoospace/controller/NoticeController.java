@@ -23,14 +23,6 @@ import co.kr.samwoospace.service.FileService;
 import co.kr.samwoospace.util.Paging;
 
 
-/**
- * °ü¸®ÀÚ ¸Ş´º °øÁö»çÇ×(notice) ¿äÃ»Ã³¸® ´ã´ç ÄÁÆ®·Ñ·¯<br/>
- * °øÁö»çÇ× List °ü·Ã ¿äÃ»Àº ListController¿¡¼­ °øÅëÀ¸·Î Ã³¸®ÇÔ<br/>
- * <br/>
- * @author roscoe
- *
- */
-
 @Controller
 @SessionAttributes({"member","noticeRecord","notice_fileList"})
 public class NoticeController {
@@ -45,10 +37,10 @@ public class NoticeController {
 	private FileService fileService;
 	
 	private static final String table = "notice";
-	private static final String table_ko = "°øÁö»çÇ×";
+	private static final String table_ko = "ê³µì§€ì‚¬í•­";
 	
-	private static final String insert_s_msg = "°øÁö»çÇ× µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
-	private static final String update_s_msg = "°øÁö»çÇ× ¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
+	private static final String insert_s_msg = "ê³µì§€ì‚¬í•­ ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
+	private static final String update_s_msg = "ê³µì§€ì‚¬í•­ ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
 	
 	@RequestMapping("/admin/notice")
 	public String noticeList(@RequestParam(required=false) Integer pageNum, Model model) {
@@ -82,9 +74,9 @@ public class NoticeController {
 	@RequestMapping("/admin/noticeWrite")
 	public String noticeWrite(@RequestParam(required=false) Integer num, Model model) { 
 		
-		// num(¼öÁ¤ÇÒ °Ô½Ã¹° ¹øÈ£)ÀÌ ÀÖ´Â °æ¿ì´Â ¼öÁ¤, ¾ø´Â °æ¿ì´Â ¾²±â
+
 		if(num == null) {
-			model.addAttribute("noticeRecord", new BoardRecord()); // SessionAttributesÀÇ record¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+			model.addAttribute("noticeRecord", new BoardRecord()); // SessionAttributesï¿½ï¿½ recordï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ñ´ï¿½.
 			model.addAttribute("notice_fileList", new ArrayList<EncodedFile>());
 			return "/admin/"+table+"_write";
 		} else {
@@ -105,7 +97,7 @@ public class NoticeController {
 		record.setBbsId(table);
 		record.setBbsName(table_ko);
 		
-		// ¼öÁ¤ ÆäÀÌÁö¿¡¼­ÀÇ ¿äÃ»ÀÌ¸é update
+
 		if(sqlType != null) {
 			record.setNum(num);
 			respon = boardService.updateBoardRecord(record, request);
@@ -113,11 +105,11 @@ public class NoticeController {
 			respon = boardService.insertBoardRecord(record, request);
 		}
 		
-		// ½ÇÆĞÇßÀ» °æ¿ì
+
 		if(respon.isStatus() == false) {
 			model.addAttribute("respon", respon);
 			model.addAttribute("noticeRecord", record);
-			// ¼öÁ¤ ÆäÀÌÁöÀÎ °æ¿ì Ãß°¡·Î ¸®ÅÏ
+
 			model.addAttribute("sqlType",sqlType);
 			model.addAttribute("num",num);
 			return "/admin/"+table+"_write";

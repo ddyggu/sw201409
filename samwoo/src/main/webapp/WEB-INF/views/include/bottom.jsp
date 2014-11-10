@@ -29,6 +29,7 @@ function relate_toggle(){
 //  if(document.getElementById("drag2").style.display=="none") {document.getElementById("drag2").style.display="";}
 // });
 
+/*
 $(function(){
 
 
@@ -69,4 +70,5 @@ $(function(){
 	}
 	
 });
+*/
 </script>

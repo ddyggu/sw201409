@@ -10,8 +10,6 @@ public class ResponStatus {
 		this.setStatus(status);
 		this.message = message;
 	}
-	
-	
 
 	public String getMessage() {
 		return message;

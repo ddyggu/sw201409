@@ -27,7 +27,7 @@
 			<td valign="top">
 				<div class="contents">
 					<div class="sub01">
-						<img src="img/sub01_bg01.jpg" alt="인사말" />
+						<img src="img/sub01_bg01_m.jpg" alt="인사말" />
 					</div>
 				</div>
 			</td>

@@ -12,9 +12,9 @@
 		<img src="img/career_pic02.jpg">
 		<div class="career_txt01">
 			<p class="m4015"><img src="img/dot_01.gif" class="vm"><strong class="f16">채용공고/접수</strong></p>
-			<p class="m10"><img src="img/dot_02.gif" class="vm"><span class="f13s"><strong>채용시기 : </strong> 상반기 5월, 하반기 10월</span></p>
+			<p class="m10"><img src="img/dot_02.gif" class="vm"><span class="f13s"><strong>채용시기 : </strong> 상시 지원 가능</span></p>
 			<p class="m10"><img src="img/dot_02.gif" class="vm"><span class="f13s"><strong>공&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 고 : </strong> 삼우공간 건축사사무소 홈페이지, 취업포털사이트</span></p>
-			<p class="m10"><img src="img/dot_02.gif" class="vm"><span class="f13s"><strong>접수방법 : </strong> 홈페이지 접수(On-Line)</span></p>
+			<p class="m10"><img src="img/dot_02.gif" class="vm"><span class="f13s"><strong>접수방법 : </strong> <a href="mailto:samspace1991@daum.net" style="text-decoration: underline;">samspace1991@daum.net</a> 으로 e-mail 접수</span></p>
 
 			<p class="m4015"><img src="img/dot_01.gif" class="vm"><strong class="f16">1차 전형</strong></p>
 			<p class="m10"><img src="img/dot_02.gif" class="vm"><span class="f13s"><strong>인성검사 : </strong> 지원자의 개인별 가치관 Screening</span></p>

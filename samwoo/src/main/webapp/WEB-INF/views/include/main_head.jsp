@@ -30,47 +30,47 @@
 			<div id="topNav">
 				<ul class="mainmenu">
 					<li class="menu01">
-						<a href="/about01?=1"><span>about us</span></a>
+						<a href="/about01"><span>about us</span></a>
 						<div class="submenu">
 							<ul>
-								<li><a href="/about01?m=1">CEO 인사말</a></li>
-								<li><a href="/about02?m=1">회사개요</a></li>
-								<li><a href="/about03?m=1">연혁</a></li>
-								<li><a href="/about04?=1">조직도</a></li>
-								<li><a href="/about05?=1">보유인력현황</a></li>
-								<li><a href="/about06?=1">인증</a></li>
-								<li><a href="/about07?=1">특허 / 신기술</a></li>
-								<li><a href="/about08?=1">찾아오시는 길</a></li>
+								<li><a href="/about01">CEO 인사말</a></li>
+								<li><a href="/about02">회사개요</a></li>
+								<li><a href="/about03">연혁</a></li>
+								<li><a href="/about04">조직도</a></li>
+								<li><a href="/about05">보유인력현황</a></li>
+								<li><a href="/about07?menu=A">특허</a></li>
+								<li><a href="/about07?menu=B">신기술</a></li>
+								<li><a href="/about08">찾아오시는 길</a></li>
 							</ul>
 						</div>
 					</li>
 					<li class="menu02">
-						<a href="/service01?m=1"><span>service</span></a>
+						<a href="/service01"><span>service</span></a>
 						<div class="submenu">
 							<ul>
-								<li><a href="/service01?m=1">감리</a></li>
-								<li><a href="/service02?m=1">설계</a></li>
-								<li><a href="/service03?m=1">미디어 사업</a></li>
-								<li><a href="/service04?m=1">기술연구소</a></li>
+								<li><a href="/service01">건설사업관리부</a></li>
+								<li><a href="/service02">설계부</a></li>
+								<li><a href="/service03">미디어 사업부</a></li>
+								<li><a href="/service04">기술연구소</a></li>
 							</ul>
 						</div>
 					</li>
 					<li class="menu03">
-					<a href="/project?m=1"><span>project</span></a>
+					<a href="/project"><span>project</span></a>
 						<div class="submenu">
 							<ul>
-								<li><a href="/project?num=1&m=1">감리</a></li>
-								<li><a href="/project?num=2&m=1">설계</a></li>
-								<li><a href="/project?num=3&m=1">미디어 사업</a></li>
+								<li><a href="/project?division=A">건설사업관리</a></li>
+								<li><a href="/project?division=B">설계</a></li>
+								<li><a href="/project?division=C">미디어 사업</a></li>
 							</ul>
 						</div>
 					<li class="menu04">
-						<a href="career01?m=1"><span>career</span></a>
+						<a href="career01"><span>career</span></a>
 						<div class="submenu">
 							<ul>
-								<li><a href="/career01?m=1">채용공고</a></li>
-								<li><a href="/career02?m=1">채용절차</a></li>
-								<li><a href="/career03?m=1">입사지원/복리후생</a></li>
+								<li><a href="/career01">채용공고</a></li>
+								<li><a href="/career02">채용절차</a></li>
+								<li><a href="/career03">인재상/복리후생</a></li>
 							</ul>
 						</div>
 					</li>
@@ -79,11 +79,10 @@
 						<a href="community01"><span>community</span></a>
 						<div class="submenu">
 							<ul>
-								<li><a href="/community01?m=1">공지사항</a></li>
-								<li><a href="/community02?m=1">사내규정</a></li>
-								<li><a href="/community03?m=1">FAQ</a></li>
-								<li><a href="/community04?m=1">고객문의</a></li>
-								<li><a href="/community05?m=1">동호회</a></li>
+								<li><a href="/community01">공지사항</a></li>
+								<li><a href="/community03">FAQ</a></li>
+								<li><a href="/community04">고객문의</a></li>
+								<li><a href="/community05">동호회</a></li>
 							</ul>
 						</div>
 					</li>      

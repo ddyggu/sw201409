@@ -19,13 +19,6 @@ import co.kr.samwoospace.util.StringUtility;
 
 
 
-/**
- * °ü¸®ÀÚ ¸Ş´º ·Î±×ÀÎ ¿äÃ» ´ã´ç ÄÁÆ®·Ñ·¯
- * 
- * @author roscoe
- *
- */
-
 @Controller
 @SessionAttributes({"member"})
 public class LoginController {
@@ -51,7 +44,7 @@ public class LoginController {
 				String fileCount = request.getHeader("file-count");
 				String newName = stringUtil.encodedFileName(OriginalFileName);
 				if(stringUtil.isIllegalExtension(OriginalFileName)) {
-					System.out.println("Çã¿ëµÇÁö ¾Ê´Â ÆÄÀÏ");
+					
 				}
 				
 			} catch (UnsupportedEncodingException e) {
@@ -88,7 +81,7 @@ public class LoginController {
 		Member inqueriedMember = memberdao.isAdminMember(member);
 		if(inqueriedMember == null) {
 			check.setCheck(false);
-			check.setMessage("¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£°¡ ¸ÂÁö ¾Ê½À´Ï´Ù.");
+			check.setMessage("ì•„ì´ë””ë‚˜ ë¹„ë°€ë²ˆí˜¸ê°€ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			model.addAttribute("check", check);
 			return "/admin/index";
 		} else {

@@ -19,62 +19,16 @@ window.onload = function() {
 	document.getElementById("division").value = division;
 }
 
-var oEditors = [];
-createEditor1 = function(holder, id) {
-	if(holder.length == 0 || !holder.getById[id]) {
-		nhn.husky.EZCreator.createInIFrame({
-			oAppRef: holder,
-			elPlaceHolder: id,
-			sSkinURI: "/se_editor/SmartEditor2Skin.html",	
-			htParams : {
-				bUseToolbar : true,					// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseVerticalResizer : true,			// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseModeChanger : true,			// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-				//aAdditionalFontList : aAdditionalFontSet,		// 추가 글꼴 목록
-				fOnBeforeUnload : function(){
-					//alert("완료!");
-				}
-			}, //boolean
-			fOnAppLoad : function(){
-				//예제 코드
-				//oEditors.getById["notice_content"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
-			},
-			fCreator: "createSEditor2"
-		});
-	}
-}
-
-function pasteHTML() {
-	var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
-	oEditors.getById["contents"].exec("PASTE_HTML", [sHTML]);
-}
-
-function showHTML() {
-	var sHTML = oEditors.getById["contents"].getIR();
-	alert(sHTML);
-}
+$(function() {
 	
-function submitContents(elClickedObj) {
-	oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
-	
-	if(document.getElementById("title").value=="") {
-		alert("제목을 입력하여 주십시오");
-		return false;
-	}
-	if(document.getElementById("contents").value=="") {
-		alert("내용을 입력하여 주십시오");
-		return false;
-	}
-	try {
-		elClickedObj.form.submit();
-	} catch(e) {}
-}
+	$("#techForm").submit(function() {
+		if(document.getElementById("title").value=="") {
+			alert("제목을 입력하여 주십시오");
+			return false;
+		}	
+	});
+});
 
-function setDefaultFont() {
-	var sDefaultFont = '궁서';
-	var nFontSize = 24;
-	oEditors.getById["contents"].setDefaultFont(sDefaultFont, nFontSize);
-}
 
 </script>
 </c:if>
@@ -89,7 +43,7 @@ function setDefaultFont() {
 				<img src="/admin/img/title02.gif"/>
 			</div>
 		
-		<form name="techForm" id="techForm" action="/admin/techWrite" method="post" encType="multipart/form-data" onsubmit="return submitContents(this);">
+		<form name="techForm" id="techForm" action="/admin/techWrite" method="post" encType="multipart/form-data">
 		<table class="aborad01_write">
 			<colgroup>
 				<col width="17%">
@@ -107,10 +61,6 @@ function setDefaultFont() {
 			<tr>
 				<th>제목</th>
 				<td><input type="text" name="title" class="ainp01" value="${techRecord.title}"/></td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td><textarea name="contents" id="contents" class="ainp02">${techRecord.contents}</textarea></td>
 			</tr>
 			<tr>
 				<th>첨부파일</th>
@@ -138,7 +88,7 @@ function setDefaultFont() {
 		
 
 			<div class="btn_wrap">
-				<input type="submit"  style="background-image:url('/admin/img/btn_confirm.gif'); width:100px; height:45px; cursor:pointer;" value=""/>  
+				<input type="submit"  style="background-image:url('/admin/img/btn_confirm.gif'); width:55px; height:24px; cursor:pointer;" value=""/>  
 				<a href="/admin/technology"><img src="/admin/img/btn_cancle.gif" /></a>
 			</div>
 		</form>	

@@ -24,6 +24,7 @@
 	<mvc:view-controller path="/community03" view-name="community03"/>
 	<mvc:view-controller path="/community04" view-name="community04"/>
 	<mvc:view-controller path="/community05" view-name="community05"/>
+	<mvc:view-controller path="/community05_list" view-name="community05_list"/>
 	<mvc:view-controller path="/community05_sub" view-name="community05_sub"/>
 	<mvc:view-controller path="/project" view-name="project"/>
 	
@@ -50,9 +51,13 @@
 	<mvc:view-controller path="/admin/technology" view-name="admin/technology"/>
 	<mvc:view-controller path="/admin/technology_view" view-name="admin/technology_view"/>
 	<mvc:view-controller path="/admin/technology_write" view-name="admin/technology_write"/>
+	<mvc:view-controller path="/admin/clubInfo" view-name="admin/clubInfo"/>
+	<mvc:view-controller path="/admin/clubInfo_view" view-name="admin/clubInfo_view"/>
+	<mvc:view-controller path="/admin/clubInfo_write" view-name="admin/tclubInfo_write"/>
 	
-	<mvc:interceptors>
-		<!--  
+	  
+	<mvc:interceptors> 
+		<!--
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/popup"/>
 			<mvc:mapping path="/admin/popup_write"/>
@@ -120,14 +125,16 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	
+	
 	<context:component-scan base-package="co.kr.samwoospace."/>
 	
 	<beans:bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
 	    <beans:property name="maxUploadSize">  
-	        <beans:value>1000000</beans:value>  
+	        <beans:value>10000000</beans:value>  
 	    </beans:property>  
 	    <beans:property name="maxInMemorySize">  
-	        <beans:value>1000000</beans:value>  
+	        <beans:value>10000000</beans:value>  
 	    </beans:property>      
 	</beans:bean>
 	

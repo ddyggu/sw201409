@@ -11,30 +11,42 @@
 	<img src="img/notice_title.jpg">
 	<div class="sub06">
 		<div class="gallery_area">
+			<form id="searchForm" name="searchForm" action="/community01" method="get">
 			<div class="select_area">
-				<select name="" class="inp01">
-					<option value="">제목</option>
-					<option value="">내용</option>
+				<select name="searchType_notice" class="inp01">
+					<option value="title">제목</option>
+					<option value="contents">내용</option>
 				</select>
 			</div>
 			<div class="search_area">
-				<input type="text" name="" class="inp">
-				<a href="#"><img src="img/btn_search.gif"></a>
+				<input type="text" name="searchWord_notice" class="inp">
+				<input type="submit" value="" style="cursor:pointer; width:20px; background-image:url('img/btn_search.gif');"/>
 			</div>
+			</form>
 		</div>
 
 		<table class="borad02">
 			<colgroup>
+				<col width="10%">
 				<col width="*">
-				<col width="8%">
+				<col width="10%">
+				<col width="10%">
 			</colgroup>
+			<tr>
+				<th>번호</th>		
+				<th>제목</th>		
+				<th>등록일</th>
+				<th>조회수</th>	
+			</tr>
 			<c:forEach var="record" items="${noticeRecord}">
 			<tr>
+				<td>${record.num}</td>
 				<td style="text-align:left;">
 					<a href="/community01_view?num=${record.num}"><strong class="c05">${record.title}</strong></a>
 					<div class="memo"></div>
 				</td>
 				<td valign="top"><span class="c04">${record.date}</span></td>
+				<td valign="top"><span class="c04">${record.readCounts}</span></td>
 			</tr>
 			</c:forEach>
 		</table>

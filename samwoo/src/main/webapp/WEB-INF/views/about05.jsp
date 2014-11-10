@@ -25,8 +25,8 @@
 			<td valign="top">
 				<div class="contents">
 					<div class="sub02">
-						저희 삼우공간건축사무소는 <strong class="cb">기사 173명, 산업기사 106명, 기술사 51명, 기능사 22명, 검축사 16명</strong>이 함께 생활하는 사무소입니다. 
-						<img src="img/sub05_pic.jpg" style="margin:91px 0 0 60px;">
+						저희 삼우공간건축사무소는 <strong class="cb">기술사 41명, 건축사 8명, 기사 83명, 산업기사 32명, 기능사 22명</strong>이 함께 생활하는 사무소입니다. 
+						<img src="img/sub05_pic.jpg" style="margin:91px 0 0 0px;">
 					</div>
 				</div>
 			</td>

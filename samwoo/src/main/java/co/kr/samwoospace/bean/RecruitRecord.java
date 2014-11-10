@@ -1,11 +1,5 @@
 package co.kr.samwoospace.bean;
 
-/**
- * 채용공고 관련 DTO 오브젝트
- * 
- * @author roscoe
- *
- */
 public class RecruitRecord extends BoardRecord {
 	
 	private String division;

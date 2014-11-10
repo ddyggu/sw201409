@@ -8,10 +8,14 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.mock.web.MockMultipartHttpServletRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import co.kr.samwoospace.bean.ClubInfoRecord;
+import co.kr.samwoospace.bean.ClubRecord;
 import co.kr.samwoospace.bean.Param;
+import co.kr.samwoospace.bean.PopupRecord;
 import co.kr.samwoospace.bean.TechRecord;
 import co.kr.samwoospace.dao.boardDAO;
 import co.kr.samwoospace.service.BoardService;
@@ -23,23 +27,18 @@ public class BoardServiceTest {
 
 	@Resource(name="boardService")
 	private BoardService boardService;
-
-	@Test
-	public void daoTest() {
-		Param<String,Object> param = new Param<String,Object>();
-		param.put("num", 1);
-		
-		Paging paging = boardService.selectPagingInfoByCondition("result", "/project", 1, 9, param);
-		
-		System.out.println("°¨¸® total " + paging.getTotalCount());
-		System.out.println(paging.makePageGroup());
-		
-	}
+	private MockMultipartHttpServletRequest request;
 	
 	@Test
 	public void test() {
-		
-		
+		Param<String,Object> param = new Param<String,Object>();
+		param.put("num", 3);
+		Paging paging = boardService.selectPagingInfoByCondition("club", "/community05_list", 1, 9, param);
+		List<ClubRecord> clubList = boardService.ListClubRecord(paging);
+
+		for(ClubRecord club : clubList) {
+			System.out.println(club.getTitle());
+		}
 	}
 	
 }

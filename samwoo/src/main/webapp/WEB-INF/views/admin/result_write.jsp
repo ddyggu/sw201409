@@ -10,20 +10,9 @@
 <script type="text/javascript" src="js/jquery-1.7.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/ajaxRequest.js"></script>
-</head>
-<c:if test="${resultRecord.division != null}">
-<script>
-window.onload = function() {
-		var division = "${resultRecord.division}";
-		var mainExpose = "${resultRecord.mainExpose}";
-		document.getElementById("division").value = division;
-		if(mainExpose=='N') {
-			document.getElementById("no").checked = true;
-		} else {
-			document.getElementById("yes").checked = true;
-		}
-}
+<script type="text/javascript" src="/se_editor/js/HuskyEZCreator.js"></script>
 
+<script>
 var oEditors = [];
 createEditor1 = function(holder, id) {
 	if(holder.length == 0 || !holder.getById[id]) {
@@ -81,9 +70,46 @@ function setDefaultFont() {
 	oEditors.getById["contents"].setDefaultFont(sDefaultFont, nFontSize);
 }
 
+$(function() {
+	
+	$(".aborad01_write tr:eq(7)").css("display","none");
+	
+	var division = "${resultRecord.division}";
+	var category = "${resultRecord.category}";
+	
+	if(division != '') { $("#division").val(division); }
+	if(category != '') { $("#category").val(category); }
+	if(division == '미디어 사업') {
+		$(".aborad01_write tr:eq(7)").css("display","table-row");
+		createEditor1(oEditors,"contents");
+		
+		$(".aborad01_write tr:eq(1)").css("display","none");
+		$(".aborad01_write tr").slice(3,7).css("display","none");
+	}
+	
+	
+	$("#division").on("change", function(e){ 
+		if($(this).val() == '미디어 사업') {
+			$(".aborad01_write tr:eq(7)").css("display","table-row");
+			createEditor1(oEditors,"contents");
+			
+			$(".aborad01_write tr:eq(1)").css("display","none");
+			$(".aborad01_write tr").slice(3,7).css("display","none");
+		} else {
+			$(".aborad01_write tr:eq(7)").css("display","none");
+			$(".aborad01_write tr:eq(1)").css("display","table-row");
+			$(".aborad01_write tr").slice(3,7).css("display","table-row");
+		}
+		
+		
+	});
+		
+});
 
 </script>
-</c:if>
+</head>
+
+
 <body>
 
 <div id="wrap">
@@ -104,7 +130,7 @@ function setDefaultFont() {
 				<th>분류</th>
 				<td>
 					<select id="division" name="division" class="ainp05">
-						<option value="감리" selected>감리</option>
+						<option value="건설사업관리" selected>건설사업관리</option>
 						<option value="설계">설계</option>
 						<option value="미디어 사업">미디어 사업</option>
 						<option value="기술연구소">기술연구소</option>
@@ -112,12 +138,44 @@ function setDefaultFont() {
 				</td>
 			</tr>
 			<tr>
-				<th>제목</th>
+				<th>세부분류</th>
+				<td>
+					<select id="category" name="category" class="ainp05">
+						<option id="RD" value="RD">주거시설</option>
+						<option id="EDLA" value="EDLA">교육/연구시설</option>
+						<option id="MEWE" value="MEWE">의료/복지시설</option>
+						<option id="OF" value="OF">업무시설</option>
+						<option id="MICO" value="MICO">군사/교정시설</option>
+						<option id="CA" value="CA">문화/집회시설</option>
+						<option id="ETC" value="ETC">기타</option>	
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>사업명</th>
 				<td><input type="text" name="title" class="ainp01" value="${resultRecord.title}"/></td>
 			</tr>
 			<tr>
+				<th>위치</th>
+				<td><input type="text" name="location" class="ainp05" value="${resultRecord.location}"/></td>
+			</tr>
+			<tr>
+				<th>대지면적</th>
+				<td><input type="text" name="lotArea" class="ainp05" value="${resultRecord.lotArea}"/></td>
+			</tr>
+			<tr>
+				<th>연면적</th>
+				<td><input type="text" name="totalArea" class="ainp05" value="${resultRecord.totalArea}"/></td>
+			</tr>
+			<tr>
+				<th>규모</th>
+				<td><input type="text" name="size" class="ainp05" value="${resultRecord.size}"/></td>
+			</tr>
+			<tr>
 				<th>내용</th>
-				<td><textarea type="text" name="contents" id="contents" class="ainp02">${resultRecord.contents}</textarea></td>
+				<td>
+				<textarea id="contents" name="contents" class="ainp02">${resultRecord.contents}</textarea>
+				</td>
 			</tr>
 			<tr>
 				<th>이미지</th>
@@ -137,13 +195,6 @@ function setDefaultFont() {
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<th>메인이미지 등록</th>
-				<td>
-					<input type="radio" name="mainExpose" id="yes" value="Y" checked/> 등록&nbsp; 
-					<input type="radio" name="mainExpose" id="no" value="N"/> 미등록
-				</td>
-			</tr>
 			<c:if test="${sqlType != null}">
 				<input type="hidden" name="num" value="${num}"/>
 				<input type="hidden" name="sqlType" value="${sqlType}"/>
@@ -152,7 +203,7 @@ function setDefaultFont() {
 			
 
 			<div class="btn_wrap">
-				<input type="submit"  style="background-image:url('/admin/img/btn_confirm.gif'); width:100px; height:45px; cursor:pointer;" value=""/>  
+				<input type="submit"  style="background-image:url('/admin/img/btn_confirm.gif'); width:55px; height:24px; cursor:pointer;" value=""/>  
 				<a href="/admin/result"><img src="/admin/img/btn_cancle.gif" /></a>
 			</div>
 	

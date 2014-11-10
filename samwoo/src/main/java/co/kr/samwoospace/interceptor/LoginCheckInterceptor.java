@@ -15,7 +15,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 	    Member member = (Member)request.getSession().getAttribute("member");
 	    if (member == null) {
 	      LoginCheck check = new LoginCheck();
-	      check.setMessage("°ü¸®ÀÚ ·Î±×ÀÎÀÌ ÇÊ¿äÇÑ ¼­ºñ½ºÀÔ´Ï´Ù.");
+	      check.setMessage("ê´€ë¦¬ì ê¶Œí•œì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 	      check.setCheck(false);
 	      request.setAttribute("check", check);
 	      request.getRequestDispatcher("/admin/index").forward(request, response);

@@ -18,14 +18,16 @@
 	<%@ include file="include/admin_head.jsp" %>
 			
 			<div class="title_area">
+				<!-- 동호회 게시물 관리 -->
 				<img src="/admin/img/title07.gif"/>
 			</div>
 	
-			<p align="right"><a href="/admin/club_write"><img src="/admin/img/btn_club.gif"></a></p>
+			<p align="right"><a href="/admin/clubWrite"><img src="/admin/img/btn_apply.gif"></a></p>
 
 			<form name="listForm" id="listForm" method="post" action="/admin/delete">
 			<table class="aborad01">
 				<colgroup>
+					<col width="6%">
 					<col width="6%">
 					<col width="8%">
 					<col width="10%">
@@ -36,10 +38,11 @@
 					<th class="tip01"><input type="checkbox" id="checKAll" onclick="CheckAll(this)"/></th>
 					<th>번호</th>
 					<th>썸네일</th>
-					<th>이름</th>
+					<th>동호회명</th>
+					<th>제목</th>
 					<th class="tip02">작성일</th>
 				</tr>
-				<c:forEach var="clubRecord"  items="${listModel.clubRecord}" >
+				<c:forEach var="clubRecord"  items="${clubList}" >
 				<tr class="onc">
 					<td><input type="checkbox" name="boardNum" value="club&${clubRecord.num}"/></td>
 					<td>${clubRecord.num}</td>
@@ -51,7 +54,8 @@
 						</c:choose>
 						</a>
 					</td>
-					<td class="tleft"><a href="/admin/clubView?&num=${clubRecord.num}&pageNum=${page}">${clubRecord.clubname}</a></td>
+					<td>${clubRecord.clubname}</td>
+					<td class="tleft"><a href="/admin/clubView?&num=${clubRecord.num}&pageNum=${page}">${clubRecord.title}</a></td>
 					<td>${clubRecord.date}</td>
 				</tr>
 				</c:forEach>
@@ -60,9 +64,7 @@
 			<div class="btn_area">
 				<input type="submit" style="background-image:url('/admin/img/btn_delete.gif'); width:55px; height:23px; cursor:pointer; border-radius:6px; " value="" />
 				<div class="pagging">
-					<ul>
-						${paging}
-					</ul>
+					${paging}
 				</div>
 			</div>
 			</form>

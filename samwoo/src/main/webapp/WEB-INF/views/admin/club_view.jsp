@@ -18,6 +18,7 @@
 	<%@ include file="include/admin_head.jsp" %>
 			
 			<div class="title_area">
+				<!-- 동호회 게시물 관리 -->
 				<img src="/admin/img/title07.gif"/>
 			</div>
 			
@@ -48,15 +49,15 @@
 					<td class="subject" colspan="5">${clubRecord.twitter}</td>
 				</tr>
 				<tr>
-					<td class="onb01">이름</td>
-					<td colspan="5" class="subject">${clubRecord.writer}</td>
+					<td class="onb01">제목</td>
+					<td colspan="5" class="subject">${clubRecord.title}</td>
 				</tr>
 				<tr>
-					<td class="onb01">대표이미지</td>
-					<td colspan="5" class="subject"><img src="/resources/upload/${clubRecord.encodedFileName}"/></td>
+					<td class="onb01">이미지</td>
+					<td colspan="5" class="subject"><img src="/resources/upload/${clubRecord.encodedFileName}" style="width:600px; height:400px;"/></td>
 				</tr>
 				<tr>
-					<td colspan="5" style="padding:30px 0;">
+					<td colspan="6" style="padding:30px 0;">
 						<div class="content001">
 						<br/>
 						${clubRecord.contents}

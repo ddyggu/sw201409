@@ -2,14 +2,6 @@ package co.kr.samwoospace.bean;
 
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- *  게시판(기본) DTO 오브젝트<br/>
- *  <br/>
- *  공지사항(notice) DTO 오브젝트
- *  
- * @author roscoe
- *
- */
 public class BoardRecord {
 	private Integer num;
 	private String title;

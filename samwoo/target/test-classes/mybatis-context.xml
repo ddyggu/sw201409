@@ -12,7 +12,8 @@
 						    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 						    http://mybatis.org/schema/mybatis-spring
 						    http://mybatis.org/schema/mybatis-spring.xsd">			    
-	
+	 
+
 	 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
     	<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" /> 
         <property name="url" value="jdbc:sqlserver://125.141.231.56:1433;DatabaseName=SAMWOO"/>
@@ -26,13 +27,13 @@
     	<property name="testWhileIdle" value="true" />
     	<property name="timeBetweenEvictionRunsMillis" value="7200000"/>
     </bean>
-	
-	<!--  
+
+	 <!-- 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
     	<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" /> 
         <property name="url" value="jdbc:sqlserver://localhost:1433;DatabaseName=SAMWOO"/>
         <property name="username" value="roscoe" />
-        <property name="password" value="roscoe" />
+        <property name="password" value="roscoe11" />
     	<property name="maxIdle" value="1"/>
     	<property name="maxActive" value="5"/>
     	
@@ -41,7 +42,9 @@
     	<property name="testWhileIdle" value="true" />
     	<property name="timeBetweenEvictionRunsMillis" value="7200000"/>
     </bean>
-	-->
+		-->
+	
+	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>

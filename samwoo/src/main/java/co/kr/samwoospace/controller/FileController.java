@@ -20,14 +20,6 @@ import co.kr.samwoospace.service.BoardService;
 import co.kr.samwoospace.service.FileService;
 import co.kr.samwoospace.util.StringUtility;
 
-/**
- * 파일 업로드 및 다운로드 요청을 처리하는 컨트롤러,<br/>
- * Multipart form을 이용한 첨부파일 업로드 요청은<br/> 
- * 서비스(co.kr.samwoospace.service.fileService)에서 처리함<br/>
- * <br/>
- * @author roscoe
- *
- */
 
 @Controller
 public class FileController {
@@ -43,11 +35,11 @@ public class FileController {
 	
 	@RequestMapping(value="/fileDelete", method=RequestMethod.GET, produces="text/plain;charset=utf-8")
 	public void fileDelete(@RequestParam int num, HttpServletResponse response) {
-		// 파일번호(identity)로 조회하여 파일정보 획득
+
 		EncodedFile file = fileService.selectFileInfoByFileNum(num);
-		// DB삭제처리
+
 		fileService.deleteFileByFileNum(file.getNum());
-		// 업로드 폴더에서 삭제처리
+
 		fileService.deleteLocatedFileOnServer(file.getEncodedFileName());
 	}
 	
