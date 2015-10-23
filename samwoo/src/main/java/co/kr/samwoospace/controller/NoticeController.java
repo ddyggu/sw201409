@@ -76,7 +76,7 @@ public class NoticeController {
 		
 
 		if(num == null) {
-			model.addAttribute("noticeRecord", new BoardRecord()); // SessionAttributes�� record�� �ʱ�ȭ�Ѵ�.
+			model.addAttribute("noticeRecord", new BoardRecord());
 			model.addAttribute("notice_fileList", new ArrayList<EncodedFile>());
 			return "/admin/"+table+"_write";
 		} else {

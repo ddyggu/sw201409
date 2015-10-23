@@ -14,4 +14,9 @@
 		from admin
 </select>
 
+<update id="updateAdminMember" parameterType="member">
+		update admin set admin_id=#{id}, admin_pass=#{pass}
+		
+</update>
+
 </mapper>

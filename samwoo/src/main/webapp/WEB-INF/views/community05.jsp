@@ -20,8 +20,11 @@
 					
 						<% int num = 1; %>
 						<c:forEach var="record" items="${InfoList}" begin="0" end="2">
-							<li>
-								<img src="img/group_pic_1.jpg" alt="동호회 썸네일 이미지">
+							<li class="club_background">
+								<c:choose>
+									<c:when test="${record.encodedFileName != null}"><img src="/resources/upload/${record.encodedFileName}" class="spic" style="width:390px; height:390px;"/></c:when>
+									<c:when test="${record.encodedFileName == null}">없음</c:when>
+								</c:choose>
 								<div class="bg_pattern"></div>
 								<div class="group_desc">
 									<div class="txt_title">
@@ -32,6 +35,7 @@
 							</li>
 							<% num++; %>
 						</c:forEach>
+						<li class="club_background"><div class="bg_pattern"></div></li>
 					</ul>
 				</dd>
 			</dl>

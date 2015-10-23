@@ -31,7 +31,7 @@ public class Member {
 	}
 	
 	public String toString() {
-		return "id : " + id + ", name : " + name;
+		return "id : " + id + ", password : " + pass + ", name : " + name;
 	}
 	
 }

@@ -19,7 +19,7 @@
 			
 			<div class="title_area">
 				<!-- 동호회 게시물 관리 -->
-				<img src="/admin/img/title07.gif"/>
+				<img src="/admin/img/title10.gif"/>
 			</div>
 	
 			<p align="right"><a href="/admin/clubWrite"><img src="/admin/img/btn_apply.gif"></a></p>
